@@ -27,7 +27,7 @@ const filenameFromResponse = (response: Response): string => {
     /**
      * Creates a filename from file response header
      */
-    const FALLBACK_NAME = "dp-export.csv";
+    const FALLBACK_NAME = "dip-export.csv";
     // eslint-disable-next-line
     const FILENAME_ATTR = 'filename="';
     const contentDisposition = response.headers.get("Content-Disposition");
@@ -136,7 +136,7 @@ export class DataTableBlock extends AssetBlock {
         try {
             const exportPlugin = await this.getExportPlugin();
             exportPlugin.exportFile({
-                filename: `dp-export-${this.refId}`,
+                filename: `dip-export-${this.refId}`,
             });
         } catch (e) {
             console.error("An error occurred while exporting dataset: ", e);

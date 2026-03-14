@@ -1,4 +1,4 @@
-# import datapane as dp
+# import datainpane as dip
 df = "my_df"
 print(f"x is {x}")
 y = x

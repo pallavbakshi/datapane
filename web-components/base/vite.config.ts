@@ -3,7 +3,7 @@ import vueESM from "../shared/rollup-plugin-vue-esm";
 import path from "path";
 import tailwindcss from "tailwindcss";
 
-module.exports = defineConfig(() => ({
+export default defineConfig(() => ({
     css: {
         postcss: {
             plugins: [

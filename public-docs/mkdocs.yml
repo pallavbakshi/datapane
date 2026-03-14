@@ -1,12 +1,12 @@
-site_name: Datapane
-repo_name: datapane/datapane
-repo_url: https://github.com/datapane/datapane/
-edit_uri: "edit/master/docs/docs/"
-copyright: © 2023 <a href="https://datapane.com" target="_blank">Datapane</a>. All rights reserved.
+site_name: Data In Pane
+repo_name: datainpane/datainpane
+repo_url: https://github.com/datainpane/datainpane/
+edit_uri: "edit/main/public-docs/docs/"
+copyright: © 2026 <a href="https://github.com/datainpane/datainpane" target="_blank">Data In Pane</a>. All rights reserved.
 
 nav:
   - Introduction: index.md
-  - Installing Datapane: installing-datapane.md
+  - Installing Data In Pane: installing-datapane.md
   - Quickstart: quickstart.ipynb
   - Blocks and Views:
     - Overview: "blocks/overview.ipynb"
@@ -31,7 +31,6 @@ nav:
           - Toggle: "reference/layout-blocks/toggle.ipynb"
       - Reports: "reference/reports.md"
 
-  # - Release Notes: releasenotes.md
 
 theme:
   name: material
@@ -98,10 +97,7 @@ plugins:
   - search:
       lang: en
   - redirects:
-      redirect_maps:
-        # "tutorials/index.md": "index.ipynb"
-        # "tutorials/basics/create-a-report.md": "features/reports.md"
-        # "tutorials/datapane-cloud/upload-a-report-to-datapane-cloud.md": "deployment/sharing_report.md"
+      redirect_maps: {}
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -124,11 +120,11 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 extra:
   generator: false
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/datapane/datapane
+      link: https://github.com/datainpane/datainpane

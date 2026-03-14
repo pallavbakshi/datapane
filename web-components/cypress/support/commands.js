@@ -27,9 +27,9 @@
 
 import "cypress-file-upload";
 
-Cypress.Commands.add("dpLogin", (opts = { isStaff: false }) => {
+Cypress.Commands.add("dipLogin", (opts = { isStaff: false }) => {
     Cypress.log({
-        name: "DP_LOGIN",
+        name: "DIP_LOGIN",
         message: "Logging in",
     });
     cy.request({
@@ -45,9 +45,9 @@ Cypress.Commands.add("dpLogin", (opts = { isStaff: false }) => {
     });
 });
 
-Cypress.Commands.add("dpSetInitialReport", () => {
+Cypress.Commands.add("dipSetInitialReport", () => {
     Cypress.log({
-        name: "DP_SET_INITIAL_REPORT",
+        name: "DIP_SET_INITIAL_REPORT",
         message: "Setting placeholder report",
     });
     cy.get(".CodeMirror").then((editor) => {

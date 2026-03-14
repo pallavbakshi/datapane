@@ -12,18 +12,18 @@ export const URLS = {
 
 export const HTML_HEADER = `<style type="text/css">
 :root {
-  --dp-accent-color: green;
-  --dp-bg-color: black;
-  --dp-text-align: right;
-  --dp-font-family: monospace;
+  --dip-accent-color: green;
+  --dip-bg-color: black;
+  --dip-text-align: right;
+  --dip-font-family: monospace;
 }
 </style>`;
 
 export const HTML_HEADER_LIGHT = `<style type="text/css">
 :root {
-  --dp-accent-color: red;
-  --dp-bg-color: white;
-  --dp-text-align: right;
-  --dp-font-family: monospace;
+  --dip-accent-color: red;
+  --dip-bg-color: white;
+  --dip-text-align: right;
+  --dip-font-family: monospace;
 }
 </style>`;

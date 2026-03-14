@@ -57,4 +57,4 @@ tasks:
     desc: "Deploy the package"
     cmds:
       # wrangler pages doesn't support a config file yet
-      - cmd: wrangler pages publish --project-name datapane-docs site
+      - cmd: wrangler pages publish --project-name datainpane-docs site

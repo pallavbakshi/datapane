@@ -1,4 +1,4 @@
-"""datapane app"""
+"""datainpane app"""
 import os
 from pathlib import Path
 
@@ -9,17 +9,17 @@ import plotly.graph_objects as go
 from bokeh.plotting import figure
 from matplotlib.collections import EventCollection
 
-import datapane as dp
-import datapane.blocks.asset
-import datapane.blocks.text
-from datapane.builtins import gen_df, gen_plot
+import datainpane as dip
+import datainpane.blocks.asset
+import datainpane.blocks.text
+from datainpane.builtins import gen_df, gen_plot
 
 lis = [1, 2, 3]
 
 # Bokeh
 p = figure(title="simple line example", x_axis_label="x", y_axis_label="y")
 p.line([1, 2, 3, 4, 5], [6, 7, 2, 4, 5], legend_label="Temp.", line_width=2)
-bokeh_asset = datapane.blocks.asset.Plot(data=p)
+bokeh_asset = datainpane.blocks.asset.Plot(data=p)
 
 # Folium
 m = folium.Map(location=[45.372, -121.6972], zoom_start=12, tiles="Stamen Terrain")
@@ -28,31 +28,31 @@ folium.Marker(location=[45.3311, -121.7113], popup="Timberline Lodge", icon=foli
 folium.Marker(
     location=[45.3300, -121.6823], popup="Some Other Location", icon=folium.Icon(color="red", icon="info-sign")
 ).add_to(m)
-folium_asset = datapane.blocks.asset.Plot(data=m)
+folium_asset = datainpane.blocks.asset.Plot(data=m)
 
 # Plotly
 fig = go.Figure()
 fig.add_trace(go.Scatter(x=[0, 1, 2, 3, 4, 5], y=[1.5, 1, 1.3, 0.7, 0.8, 0.9]))
 fig.add_trace(go.Bar(x=[0, 1, 2, 3, 4, 5], y=[1, 0.5, 0.7, -1.2, 0.3, 0.4]))
-plotly_asset = datapane.blocks.asset.Plot(data=fig)
+plotly_asset = datainpane.blocks.asset.Plot(data=fig)
 
 # Markdown
-md_block = datapane.blocks.inline_text.Text(
+md_block = datainpane.blocks.inline_text.Text(
     text=f"# Test markdown block with env var: {os.environ['ENV_VAR']} \n Test **content**"
 )
 
 # Downloadable file
-file_asset = datapane.blocks.asset.Attachment(data=lis)
+file_asset = datainpane.blocks.asset.Attachment(data=lis)
 
 # In-line image
-img_asset = datapane.blocks.asset.Media(file=Path("./datapane-icon-192x192.png"))
+img_asset = datainpane.blocks.asset.Media(file=Path("./datainpane-icon-192x192.png"))
 
 # Vega
-vega_asset = datapane.blocks.asset.Plot(data=gen_plot())
+vega_asset = datainpane.blocks.asset.Plot(data=gen_plot())
 
 # Table
-df_table_asset = datapane.blocks.asset.Table(gen_df())
-df_datatable_asset = datapane.blocks.asset.DataTable(gen_df(10000))
+df_table_asset = datainpane.blocks.asset.Table(gen_df())
+df_datatable_asset = datainpane.blocks.asset.DataTable(gen_df(10000))
 
 # Matplotlib
 np.random.seed(19680801)
@@ -78,7 +78,7 @@ ax.add_collection(yevents2)
 ax.set_xlim([0, 1])
 ax.set_ylim([0, 1])
 ax.set_title("line plot with data points")
-mpl_asset = datapane.blocks.asset.Plot(mpl_fig)
+mpl_asset = datainpane.blocks.asset.Plot(mpl_fig)
 
 # Report
 blocks = [
@@ -93,7 +93,7 @@ blocks = [
     mpl_asset,
 ]
 
-dp.save_report(dp.App(blocks=blocks), path="local_xml_report.html")
+dip.save_report(dip.App(blocks=blocks), path="local_xml_report.html")
 # add datatable
 blocks.append(df_datatable_asset)
-dp.upload_report(dp.App(blocks=blocks), name="xml_report", overwrite=True)
+dip.upload_report(dip.App(blocks=blocks), name="xml_report", overwrite=True)

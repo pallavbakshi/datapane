@@ -1,8 +1,8 @@
-import datapane as dp
-import datapane.blocks.text
+import datainpane as dip
+import datainpane.blocks.text
 
-app = dp.App(
-    datapane.blocks.inline_text.Text("__REPORT_RENDERED__"),
+app = dip.App(
+    datainpane.blocks.inline_text.Text("__REPORT_RENDERED__"),
 )
 
-dp.upload_report(app, name="no-params-test-report", overwrite=True)
+dip.upload_report(app, name="no-params-test-report", overwrite=True)

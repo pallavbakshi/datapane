@@ -72,7 +72,7 @@ export const jsonIsArrowTable = (json: any): boolean =>
     jsonType(json).includes("application/vnd.apache.arrow+binary");
 
 export const jsonIsHTMLTable = (json: any): boolean =>
-    jsonType(json) === "application/vnd.datapane.table+html";
+    jsonType(json) === "application/vnd.datainpane.table+html";
 
 export const jsonIsIFrameHTML = (json: any): boolean =>
     jsonType(json) === "application/vnd.folium+html";

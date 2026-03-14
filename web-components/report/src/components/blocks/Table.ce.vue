@@ -5,7 +5,7 @@ const p = defineProps<{
     class: string;
 }>();
 
-const { dpLocal } = window;
+const { dipLocal } = window;
 
 const tableRef = (node: any): void => {
     /**
@@ -21,7 +21,7 @@ const tableRef = (node: any): void => {
 </script>
 
 <template>
-    <link v-if="!dpLocal" rel="stylesheet" href="/static/report/index.css" />
+    <link v-if="!dipLocal" rel="stylesheet" href="/static/report/index.css" />
     <div
         :ref="tableRef"
         :class="['w-full', { 'h-full absolute top-0': p.singleBlockEmbed }]"

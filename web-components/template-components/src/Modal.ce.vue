@@ -71,7 +71,7 @@ const open = ref<boolean>(openInitial);
                         <button
                             @click="open = false"
                             type="button"
-                            class="dp-btn dp-btn-info mr-3"
+                            class="dip-btn dip-btn-info mr-3"
                         >
                             Close
                         </button>

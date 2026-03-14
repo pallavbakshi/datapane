@@ -151,7 +151,7 @@ export const useControlStore = (
                 }
             } else {
                 console.warn(
-                    "[Datapane] Scheduled run dropped as the current run is still in progress",
+                    "[Data In Pane] Scheduled run dropped as the current run is still in progress",
                 );
             }
         };

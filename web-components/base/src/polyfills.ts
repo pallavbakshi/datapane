@@ -1,3 +1,2 @@
-import "core-js/features/array/flat-map";
-import "core-js/features/object/values";
-import "core-js/features/object/entries";
+// Polyfills removed — Array.flatMap, Object.values, Object.entries
+// are natively available in all modern browsers (2018+)

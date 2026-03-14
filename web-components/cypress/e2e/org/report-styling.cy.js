@@ -3,7 +3,7 @@ import { URLS, HTML_HEADER, HTML_HEADER_LIGHT } from "../../support/constants";
 
 describe("Changing a report's style", () => {
     it("Should set a global theme and submit empty an local theme, then verify that the global theme has been applied", () => {
-        cy.dpLogin({ isStaff: true });
+        cy.dipLogin({ isStaff: true });
 
         // Change to accent-green bg-black theme
         cy.visit("/teams-settings-visual");
@@ -13,7 +13,7 @@ describe("Changing a report's style", () => {
         cy.get("[data-cy=button-save-visual]").click();
 
         cy.clearCookies();
-        cy.dpLogin({ isStaff: true });
+        cy.dipLogin({ isStaff: true });
 
         // Submit empty local visual form
         cy.visit(`${URLS.STYLE_REPORT}settings-visual`);
@@ -43,7 +43,7 @@ describe("Changing a report's style", () => {
     });
 
     it("Should set a local theme and verify that it overwrites the global one", () => {
-        cy.dpLogin({ isStaff: true });
+        cy.dipLogin({ isStaff: true });
 
         // Change to global light prose
         cy.visit("/teams-settings-visual");
@@ -52,7 +52,7 @@ describe("Changing a report's style", () => {
         cy.get("[data-cy=button-save-visual]").click();
 
         cy.clearCookies();
-        cy.dpLogin({ isStaff: true });
+        cy.dipLogin({ isStaff: true });
 
         // Set local theme
         cy.visit(`${URLS.STYLE_REPORT}settings-visual`);
@@ -76,7 +76,7 @@ describe("Changing a report's style", () => {
     });
 
     it("Should empty both global and local themes, and verify fallback default theme", () => {
-        cy.dpLogin({ isStaff: true });
+        cy.dipLogin({ isStaff: true });
 
         // Delete global header
         cy.visit("/teams-settings-visual");
@@ -85,7 +85,7 @@ describe("Changing a report's style", () => {
         cy.get("[data-cy=button-save-visual]").click();
 
         cy.clearCookies();
-        cy.dpLogin({ isStaff: true });
+        cy.dipLogin({ isStaff: true });
 
         // Delete local header
         cy.visit(`${URLS.STYLE_REPORT}settings-visual`);

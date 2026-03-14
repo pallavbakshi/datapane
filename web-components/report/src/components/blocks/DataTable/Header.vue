@@ -65,7 +65,7 @@ const remoteActionSections: Section[] = [
 
 const actionSections: Section[] = [
     ...localActionSections,
-    ...(window.dpLocal ? [] : remoteActionSections),
+    ...(window.dipLocal ? [] : remoteActionSections),
 ];
 </script>
 
@@ -89,7 +89,7 @@ const actionSections: Section[] = [
                         }`"
                         :disabled="p.previewMode"
                         data-cy="btn-open-query"
-                        class="dp-btn-info"
+                        class="dip-btn-info"
                     >
                         Run SQL Query
                     </dp-button>

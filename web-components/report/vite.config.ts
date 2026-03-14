@@ -1,12 +1,14 @@
 import { defineConfig, LibraryFormats } from "vite";
-import replace from "@rollup/plugin-replace";
 import vueESM from "../shared/rollup-plugin-vue-esm";
 import path from "path";
 import tailwindcss from "tailwindcss";
 import vue from "@vitejs/plugin-vue";
 import copy from "rollup-plugin-copy";
+import { createRequire } from "module";
 
-module.exports = defineConfig(({ mode }) => ({
+const require = createRequire(import.meta.url);
+
+export default defineConfig(({ mode }) => ({
     test: {
         include: ["./report/tests/*.test.ts"],
         setupFiles: ["./report/tests/setup.ts"],
@@ -35,18 +37,8 @@ module.exports = defineConfig(({ mode }) => ({
                 },
             },
         }),
-        replace({
-            include: ["node_modules/@bokeh/**/*.js"],
-            values: {
-                // shim jquery to window object for bokehjs
-                jQuery: "window.jQuery",
-            },
-            preventAssignment: false,
-        }) as any,
     ],
     define: {
-        // Bokeh 2.4 expects a global PACKAGE_VERSION to be defined
-        PACKAGE_VERSION: JSON.stringify(process.env.npm_package_version),
         // Pinia expects the node `process` global to be defined but support for this
         // was removed in Vite 3
         "process.env.NODE_ENV": `"${process.env.NODE_ENV}"`,

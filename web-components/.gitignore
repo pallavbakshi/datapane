@@ -11,7 +11,9 @@ junit.xml
 
 # production
 /build
-/dist
+/dist/*
+!/dist/report
+!/dist/assets
 
 # misc
 .DS_Store

@@ -7,9 +7,9 @@ export default defineConfig({
     includeShadowDom: true,
     video: false,
     env: {
-        testEmail: "test@datapane.com",
+        testEmail: "test@datainpane.com",
         testPassword: "",
-        staffEmail: "support@datapane.com",
+        staffEmail: "support@datainpane.com",
         staffPassword: "",
         styleReportURL: "",
         paramsAppURL: "",

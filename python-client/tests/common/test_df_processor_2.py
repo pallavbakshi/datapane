@@ -4,7 +4,7 @@ from datetime import timedelta
 import numpy as np
 import pandas as pd
 
-from datapane.common.df_processor import to_df
+from datainpane.common.df_processor import to_df
 
 
 def assert_unnamed_col_works(col):

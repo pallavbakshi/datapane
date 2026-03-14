@@ -3,7 +3,7 @@ import { URLS } from "../../support/constants";
 
 describe("File viewing", () => {
     before(() => {
-        cy.dpLogin();
+        cy.dipLogin();
         cy.visit(URLS.FILE);
     });
 

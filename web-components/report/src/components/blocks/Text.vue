@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import * as marked from "marked";
+import { Marked } from "marked";
+import { markedHighlight } from "marked-highlight";
 import hljs from "highlight.js";
 import BlockWrapper from "../layout/BlockWrapper.vue";
 import { BlockFigureProps } from "../../data-model/blocks";
 
-(marked as any).setOptions({
-    highlight: function (code: string, language: string) {
-        return hljs.highlight(code, { language: language || "plaintext" })
-            .value;
-    },
-});
+const markedInstance = new Marked(
+    markedHighlight({
+        highlight(code: string, lang: string) {
+            if (lang && hljs.getLanguage(lang)) {
+                return hljs.highlight(code, { language: lang }).value;
+            }
+            return hljs.highlightAuto(code).value;
+        },
+    }),
+);
 
 const p = defineProps<{
     content: string;
@@ -18,7 +23,7 @@ const p = defineProps<{
     figure: BlockFigureProps;
     singleBlockEmbed?: boolean;
 }>();
-const md = computed(() => (marked as any).parse(p.content));
+const md = computed(() => markedInstance.parse(p.content) as string);
 </script>
 
 <template>
@@ -28,7 +33,7 @@ const md = computed(() => (marked as any).parse(p.content));
             data-cy="block-markdown"
         >
             <div
-                class="w-full prose font-dp-prose dark:prose-invert text-container"
+                class="w-full prose font-dip-prose dark:prose-invert text-container"
                 v-html="md"
             />
         </div>

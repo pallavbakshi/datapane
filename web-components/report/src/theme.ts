@@ -25,21 +25,21 @@ export const setTheme = (isLightProse?: boolean) => {
         ? "rgb(107, 114, 128)"
         : "rgb(55, 65, 81)"; /* gray-500 : gray-700 */
 
-    const accentColor = getCssVar("--dp-accent-color");
+    const accentColor = getCssVar("--dip-accent-color");
     const root = document.documentElement;
 
     try {
         const color = chroma(accentColor);
         root.style.setProperty(
-            "--dp-accent-secondary-color",
+            "--dip-accent-secondary-color",
             color.alpha(0.14).hex(),
         );
         root.style.setProperty(
-            "--dp-accent-text",
+            "--dip-accent-text",
             color.get("lab.l") < 70 ? "white" : "black",
         );
-        root.style.setProperty("--dp-light-gray", lightFontColor);
-        root.style.setProperty("--dp-dark-gray", darkFontColor);
+        root.style.setProperty("--dip-light-gray", lightFontColor);
+        root.style.setProperty("--dip-dark-gray", darkFontColor);
     } catch (e) {
         console.error("An error occurred while setting a theme property: ", e);
     }

@@ -57,10 +57,6 @@ setApp();
 const storeProps = storeToRefs(rootStore);
 const { report } = storeProps;
 
-onMounted(() => {
-    return;
-});
-
 const htmlHeader = computed(() => {
     // HTML header is taken from the report object, unless overwritten via props
     // TODO - support setting via report object?
@@ -80,7 +76,7 @@ onMounted(() => {
     setTheme(p.isLightProse);
 });
 
-const { dpAppRunner } = window;
+const { dipAppRunner } = window;
 </script>
 
 <template>
@@ -88,7 +84,7 @@ const { dpAppRunner } = window;
     <report-component
         v-if="isView(report) && !error"
         :reset-app="resetApp"
-        :is-served-app="dpAppRunner"
+        :is-served-app="dipAppRunner"
         :report-width-class="p.reportWidthClass"
         :is-org="p.isOrg"
         :mode="p.mode"

@@ -18,7 +18,7 @@ const addOuterPage = (cm) =>
 
 describe("Report builder", () => {
     before(() => {
-        cy.dpLogin();
+        cy.dipLogin();
     });
 
     beforeEach(() => {
@@ -28,7 +28,7 @@ describe("Report builder", () => {
     });
 
     it("(e2e): Should add assets to a report, preview the report, and save", () => {
-        cy.dpSetInitialReport();
+        cy.dipSetInitialReport();
 
         // A report with markdown should exist on load
         cy.get("[data-cy=block-markdown]").should("exist");
@@ -63,7 +63,7 @@ describe("Report builder", () => {
     });
 
     it("Should error on adding invalid XML", () => {
-        cy.dpSetInitialReport();
+        cy.dipSetInitialReport();
 
         cy.get("[data-cy=builder-error]").should("not.exist");
 
@@ -76,7 +76,7 @@ describe("Report builder", () => {
     });
 
     it("Should error on invalid report schema", () => {
-        cy.dpSetInitialReport();
+        cy.dipSetInitialReport();
 
         cy.get("[data-cy=builder-error]").should("not.exist");
 

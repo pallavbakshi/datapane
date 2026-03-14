@@ -6,8 +6,8 @@ const SearchQuery = defineAsyncComponent(
     () => import("./src/SearchQuery.ce.vue"),
 );
 
-customElements.define("dp-modal", defineCustomElement(Modal));
-customElements.define("dp-search-query", defineCustomElement(SearchQuery));
+customElements.define("dip-modal", defineCustomElement(Modal));
+customElements.define("dip-search-query", defineCustomElement(SearchQuery));
 
 const templateUtils = {
     toggleVisibility,

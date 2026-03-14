@@ -1,10 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
-# TODO: we should probably bundle the statics within the docs build
-# We build against the datpane source, so reference the assets in /dev
-# which are continously relased
-export DATAPANE_CDN_BASE="${DATAPANE_CDN_BASE:-https://datapane-cdn.com/dev}"
+# We build against the datainpane source, so reference the assets in /dev
+# which are continuously released
+export DATAPANE_CDN_BASE="${DATAPANE_CDN_BASE:-https://datainpane-cdn.com/dev}"
 export PYTHONWARNINGS="ignore"
 
 echo "Building against CDN: ${DATAPANE_CDN_BASE}"

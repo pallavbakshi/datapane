@@ -38,6 +38,9 @@ export class Coerce {
 
     private composeIntField(field: any) {
         if (field.type.bitWidth >= 64) {
+            // TODO: This is a stub — the identity function `(row) => row` does nothing.
+            // It should coerce BigInt -> Number for int64 columns, e.g.:
+            //   row[field.name] = Number(row[field.name]);
             this.coerceRow = R.compose((row) => row, this.coerceRow);
         }
     }

@@ -37,7 +37,7 @@ tasks:
       DRY_RUN: '{{.DRY_RUN | default "false"}}'
       ENV_NAME: '{{.ENV_NAME | default ""}}'
       PYTHON_CLIENT_VERSION: '{{.PYTHON_CLIENT_VERSION | default "dev"}}'
-      CDN_BUCKET: 'gs://datapane-static-hosting-{{.ENV_NAME}}'
+      CDN_BUCKET: 'gs://datainpane-static-hosting-{{.ENV_NAME}}'
       CDN_BUCKET_PATH: '{{.CDN_BUCKET}}/{{.PYTHON_CLIENT_VERSION}}'
       IMMUTABLE_TARGET: '{{ and (eq .ENV_NAME "prod") (ne .PYTHON_CLIENT_VERSION "dev") }}'
       ALLOW_OVERWRITING: '{{.ALLOW_OVERWRITING | default (eq .IMMUTABLE_TARGET "false") }}'

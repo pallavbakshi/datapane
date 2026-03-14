@@ -3,7 +3,7 @@ import { URLS } from "../../support/constants";
 
 describe("Report rendering", () => {
     before(() => {
-        cy.dpLogin();
+        cy.dipLogin();
         cy.visit(URLS.STYLE_REPORT);
         cy.get("#djHideToolBarButton").click();
     });
@@ -121,7 +121,7 @@ describe("Report rendering", () => {
             .should("be.visible");
     });
 
-    // Disabled as we don't yet support Compute on dp-server
+    // Disabled as we don't yet support Compute on dip-server
     // it("Should find all rendered controls", () => {
     //     cy.scrollToFirst("[data-cy=date-field]").should("be.visible");
     //     cy.scrollToFirst("[data-cy=file-field]").should("be.visible");

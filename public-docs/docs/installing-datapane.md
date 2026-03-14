@@ -1,13 +1,13 @@
 ---
-description: Installing and setting up the Datapane library and API on your device
+description: Installing and setting up the Data In Pane library and API on your device
 ---
 
-Datapane's Python library and CLI can be installed using either `pip` or `conda` on macOS, Windows, or Linux. Datapane supports Python **3.8 - 3.11**.
+Data In Pane's Python library and CLI can be installed using either `pip` or `conda` on macOS, Windows, or Linux. Data In Pane supports Python **3.12+**.
 
 !!! info
     Instructions for installing Python can be found at [https://wiki.python.org/moin/BeginnersGuide/Download](https://wiki.python.org/moin/BeginnersGuide/Download).
 
-    Additional install instructions can be found on the project [GitHub's page](https://github.com/datapane/datapane).
+    Additional install instructions can be found on the project [GitHub's page](https://github.com/datainpane/datainpane).
 
 ## pip
 
@@ -16,13 +16,13 @@ If you use `pip`, you can install it with:
 === "Shell"
 
     ```bash
-    pip3 install -U datapane
+    pip3 install -U datainpane
     ```
 
 === "Jupyter"
 
     ```bash
-    !pip3 install -U datapane
+    !pip3 install -U datainpane
     ```
 
 ## conda
@@ -32,44 +32,35 @@ If you use `conda`, you can install it with:
 === "Shell"
 
     ```bash
-    conda install -c conda-forge "datapane>=0.16.0"
+    conda install -c conda-forge "datainpane>=0.17.0"
     ```
 
 === "Jupyter"
 
     ```bash
-    !conda install -c conda-forge "datapane>=0.16.0"
+    !conda install -c conda-forge "datainpane>=0.16.0"
     ```
 
 !!! warning
-    Conda sometimes installs an older version of Datapane. If you receive errors, please check the version and try running `conda update --all` or try in a new conda environment (`conda create -n ENV` and `conda activate ENV`)
+    Conda sometimes installs an older version of Data In Pane. If you receive errors, please check the version and try running `conda update --all` or try in a new conda environment (`conda create -n ENV` and `conda activate ENV`)
 
 ## Upgrading
 
-We upgrade Datapane regularly to include new features, both in the client and on the hosted version. From time to time your client may no longer be compatible with the Datapane server when uploading an app. If this happens, you will receive an error like the following:
-
-```
-IncompatibleVersionError: Your client is out-of-date (version 0.9.2) and may be causing errors,
-please upgrade to version 0.10.2
-```
-
-In such an event, please upgrade your Datapane cli via `pip` or `conda` and try again.
+To upgrade Data In Pane to the latest version, use the same tool you used to install it:
 
 ### Upgrading via pip
 
-If you installed Datapane via pip, run the following command:
-
 ```bash
-pip install -U datapane
+pip install -U datainpane
 ```
 
 ### Upgrading via conda
 
-If you installed `datapane` via conda, run the following command, adding the `--all` flag if needed. As above, if you receive errors please try using a fresh conda environment.
-
 ```bash
-conda update datapane OR conda update --all
+conda update datainpane
 ```
+
+If you receive errors with conda, try using a fresh conda environment (`conda create -n ENV` and `conda activate ENV`).
 
 
 ## Windows Tips and Troubleshooting
@@ -84,17 +75,17 @@ We also strongly recommend using a 64-bit rather than the 32-bit version of Pyth
 python -c "import struct; print(struct.calcsize('P')*8, 'bit')"
 ```
 
-Also note that on Windows, you can run the `datapane` command either by running `datapane` or `datapane.exe` on the command-line.
+Also note that on Windows, you can run the `datainpane` command either by running `datainpane` or `datainpane.exe` on the command-line.
 
 ### Windows-specific Issues
 
-#### Import errors when running/importing Datapane
+#### Import errors when running/importing Data In Pane
 
-You may encounter errors such as `ImportError: DLL load failed` when running Datapane or importing it within your Python code.
+You may encounter errors such as `ImportError: DLL load failed` when running Data In Pane or importing it within your Python code.
 
 If so, try installing the [Visual C++ Redistributables for Windows](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads) from Microsoft and running again (you most likely want to download the version for x64, i.e. `vc_redist.x64.exe`)
 
-#### Datapane install errors trying to compile `pyarrow` using Visual C++
+#### Data In Pane install errors trying to compile `pyarrow` using Visual C++
 
 This usually occurs when you are running a 32-bit version of Python and installing via `pip`. Either try using `conda` or install a 64-bit version of Python (for example from the Windows Store as mentioned above).
 

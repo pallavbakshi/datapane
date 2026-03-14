@@ -1,8 +1,8 @@
 import pytest
 from packaging.version import Version
 
-from datapane.common import versioning as v
-from datapane.common.utils import should_compress_mime_type_for_upload
+from datainpane.common import versioning as v
+from datainpane.common.utils import should_compress_mime_type_for_upload
 
 
 def test_version():
@@ -35,7 +35,7 @@ def test_version():
         ("application/zip", False),
         # Our special cases:
         ("application/vnd.vegalite.v5+json", True),
-        ("application/vnd.datapane.table+html", True),
+        ("application/vnd.datainpane.table+html", True),
         ("application/vnd.pickle+binary", True),
         ("application/vnd.apache.arrow+binary", True),
         ("application/x-tgz", False),

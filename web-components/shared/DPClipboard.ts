@@ -39,9 +39,9 @@ export class DPClipboard {
     private static onSuccess = () => {
         const notificationEl = document.getElementById("copy-notification");
         if (notificationEl) {
-            notificationEl.classList.toggle("dp-invisible");
+            notificationEl.classList.toggle("dip-invisible");
             setTimeout(
-                () => notificationEl.classList.toggle("dp-invisible"),
+                () => notificationEl.classList.toggle("dip-invisible"),
                 2000,
             );
         }

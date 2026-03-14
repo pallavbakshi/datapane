@@ -7,9 +7,9 @@ os.environ["DP_TEST_ENV"] = "true"
 
 import pytest
 
-from datapane import DPMode, set_dp_mode
-from datapane.client import config
-from datapane.client.utils import _setup_dp_logging
+from datainpane import DPMode, set_dp_mode
+from datainpane.client import config
+from datainpane.client.utils import _setup_dp_logging
 
 
 @pytest.fixture(autouse=True)

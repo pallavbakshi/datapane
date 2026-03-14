@@ -1,6 +1,6 @@
 import { afterAll, afterEach, beforeAll } from "vitest";
 import { setupServer } from "msw/node";
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 import fragmentJson from "./fixtures/fragment.json?raw";
 
 const DISPATCH_FRAGMENT = JSON.parse(fragmentJson);
@@ -10,8 +10,8 @@ const DISPATCH_FRAGMENT = JSON.parse(fragmentJson);
  */
 
 export const restHandlers = [
-    rest.post("/app-rpc-call", (req: any, res: any, ctx: any) => {
-        return res(ctx.status(200), ctx.json(DISPATCH_FRAGMENT));
+    http.post("/app-rpc-call", () => {
+        return HttpResponse.json(DISPATCH_FRAGMENT, { status: 200 });
     }),
 ];
 

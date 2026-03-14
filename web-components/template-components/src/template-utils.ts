@@ -24,7 +24,7 @@ export const toggleVisibility = (
         }
 
         if (options.initialOpen) {
-            elementToToggle.classList.remove("dp-invisible");
+            elementToToggle.classList.remove("dip-invisible");
         }
 
         for (const selector of toggleVisibilitySelectors) {
@@ -35,10 +35,10 @@ export const toggleVisibility = (
             }
 
             clickToggleElement.addEventListener("click", () => {
-                elementToToggle.classList.toggle("dp-invisible");
+                elementToToggle.classList.toggle("dip-invisible");
                 if (options.callback) {
                     options.callback(
-                        !elementToToggle.classList.contains("dp-invisible"),
+                        !elementToToggle.classList.contains("dip-invisible"),
                     );
                 }
             });

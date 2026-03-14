@@ -1,0 +1,39 @@
+var f = Object.defineProperty;
+var z = (i, r, s) => r in i ? f(i, r, { enumerable: !0, configurable: !0, writable: !0, value: s }) : i[r] = s;
+var d = (i, r, s) => (z(i, typeof r != "symbol" ? r + "" : r, s), s);
+import { S as l } from "./single_marker.12867f9e.es.js";
+import "./base_marker.215ae696.es.js";
+import "./buffer.ac3ad2d2.es.js";
+import "./Bokeh.a8fd047d.es.js";
+import "../vue.esm-browser.prod.js";
+import "./index.95d725f4.es.js";
+const { abs: u } = Math;
+class x extends l {
+  constructor(s, e) {
+    super(s, e);
+    d(this, "glyph");
+    this.glyph = e;
+  }
+  get marker_type() {
+    return this._border_radius_nonzero ? "round_rect" : "rect";
+  }
+  _set_data() {
+    const s = this.nvertices, e = this._centers.get_sized_array(s * 2), c = this._widths.get_sized_array(s), p = this._heights.get_sized_array(s), { sleft: g, sright: m, stop: b, sbottom: y } = this.glyph, { missing_point: h } = l;
+    for (let t = 0; t < s; t++) {
+      const _ = g[t], o = m[t], a = b[t], n = y[t];
+      isFinite(_ + o + a + n) ? (e[2 * t] = (_ + o) / 2, e[2 * t + 1] = (a + n) / 2, c[t] = u(o - _), p[t] = u(a - n)) : (e[2 * t] = h, e[2 * t + 1] = h, c[t] = h, p[t] = h);
+    }
+    if (this._centers.update(), this._widths.update(), this._heights.update(), this._angles.set_from_scalar(0), this.glyph.border_radius != null) {
+      const { top_left: t, top_right: _, bottom_right: o, bottom_left: a } = this.glyph.border_radius;
+      this._border_radius = [t, _, o, a], this._border_radius_nonzero = Math.max(...this._border_radius) > 0;
+    } else
+      this._border_radius = [0, 0, 0, 0], this._border_radius_nonzero = !1;
+  }
+  _set_once() {
+    super._set_once(), this._auxs.set_from_scalar(0);
+  }
+}
+d(x, "__name__", "LRTBGL");
+export {
+  x as LRTBGL
+};

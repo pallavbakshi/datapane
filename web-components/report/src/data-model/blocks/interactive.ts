@@ -9,8 +9,45 @@ import VMultiChoiceField from "../../components/controls/MultiChoiceField.vue";
 import VFileField from "../../components/controls/FileField.vue";
 import VDateTimeField from "../../components/controls/DateTimeField.vue";
 import VSelectField from "../../components/controls/SelectField.vue";
-import moment from "moment";
 import he from "he";
+
+/**
+ * Format a Date object according to the given format string.
+ * Supports the subset of formats used by TemporalField:
+ *   "YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD", "HH:mm:ss"
+ */
+function formatDate(date: Date, format: string): string {
+    const pad = (n: number) => n.toString().padStart(2, "0");
+    const YYYY = date.getFullYear().toString();
+    const MM = pad(date.getMonth() + 1);
+    const DD = pad(date.getDate());
+    const HH = pad(date.getHours());
+    const mm = pad(date.getMinutes());
+    const ss = pad(date.getSeconds());
+
+    return format
+        .replace("YYYY", YYYY)
+        .replace("MM", MM)
+        .replace("DD", DD)
+        .replace("HH", HH)
+        .replace("mm", mm)
+        .replace("ss", ss);
+}
+
+/**
+ * Parse an initial value string into a Date.
+ * If parseFormat is "HH:mm:ss", treats the value as a time on today's date.
+ * Otherwise, relies on native Date parsing (ISO 8601 formats).
+ */
+function parseInitial(value: string, parseFormat?: string): Date {
+    if (parseFormat === "HH:mm:ss") {
+        const [h, m, s] = value.split(":").map(Number);
+        const d = new Date();
+        d.setHours(h, m, s, 0);
+        return d;
+    }
+    return new Date(value);
+}
 
 const parseJsonProp = (json: string): Record<string, unknown> | string[] =>
     /**
@@ -111,9 +148,10 @@ export class TemporalField extends ControlsField {
         const { timeFormat, type, parseFormat } = opts;
         this.componentProps = {
             ...this.componentProps,
-            // initial may be undefined -> moment() gives us current datetime
-            // parseFormat may be undefined -> moment does automatic datetime parsing
-            initial: (initial ? moment(initial, parseFormat) : moment()).format(
+            // initial may be undefined -> new Date() gives us current datetime
+            // parseFormat may be undefined -> native Date does automatic datetime parsing
+            initial: formatDate(
+                initial ? parseInitial(initial, parseFormat) : new Date(),
                 timeFormat,
             ),
             type,

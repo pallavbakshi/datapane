@@ -69,7 +69,7 @@ revo-grid {
 }
 
 // Fix for flex-containers to allow <pre> tags with overflow-x -- see https://weblog.west-wind.com/posts/2016/feb/15/flexbox-containers-pre-tags-and-managing-overflow
-.dp-pre-container {
+.dip-pre-container {
     max-width: 100%;
     min-width: 0;
 }
@@ -82,7 +82,7 @@ revo-grid {
     word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
-.datapane-tooltip-max-width {
+.datainpane-tooltip-max-width {
     max-width: 25em;
 }
 

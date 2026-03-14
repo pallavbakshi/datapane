@@ -3,10 +3,10 @@ import { URLS } from "../../support/constants";
 
 const CSS_HEADER = `<style>
 :root {
-  --dp-accent-color: green;
-  --dp-bg-color: black;
-  --dp-text-align: right;
-  --dp-font-family: monospace;
+  --dip-accent-color: green;
+  --dip-bg-color: black;
+  --dip-text-align: right;
+  --dip-font-family: monospace;
 }
 </style>`;
 
@@ -15,7 +15,7 @@ const MALICIOUS_HEADER =
 
 describe("Changing a report's style", () => {
     before(() => {
-        cy.dpLogin();
+        cy.dipLogin();
     });
 
     beforeEach(() => {

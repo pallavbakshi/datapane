@@ -2,7 +2,7 @@
 import { computed, ComputedRef } from "vue";
 import { Block } from "../../data-model/blocks";
 import MultiSelect from "vue-multiselect";
-import "vue-multiselect/dist/dist/vue-multiselect.esm.css";
+import "vue-multiselect/dist/vue-multiselect.css";
 import { storeToRefs } from "pinia";
 
 const p = defineProps<{ type?: string; store: any }>();
@@ -68,9 +68,9 @@ const setTabNumberFromEvent = (ev: Event) =>
                     :class="[
                         'px-3 py-2 font-medium text-sm rounded-md rounded-b-none',
                         {
-                            'text-dp-accent bg-dp-accent-light':
+                            'text-dip-accent bg-dip-accent-light':
                                 tabNumber === idx,
-                            'text-dp-light-gray hover:text-dp-dark-gray':
+                            'text-dip-light-gray hover:text-dip-dark-gray':
                                 tabNumber !== idx,
                         },
                     ]"
@@ -93,8 +93,8 @@ const setTabNumberFromEvent = (ev: Event) =>
 
 <style>
 .multiselect__option--highlight {
-    background: var(--dp-accent-color);
-    color: var(--dp-accent-text);
+    background: var(--dip-accent-color);
+    color: var(--dip-accent-text);
 }
 
 .multiselect__option--selected.multiselect__option--highlight {
@@ -107,7 +107,7 @@ const setTabNumberFromEvent = (ev: Event) =>
 }
 
 .multiselect__option--highlight.multiselect__option--selected {
-    background: var(--dp-accent-color);
-    color: var(--dp-accent-text);
+    background: var(--dip-accent-color);
+    color: var(--dip-accent-text);
 }
 </style>

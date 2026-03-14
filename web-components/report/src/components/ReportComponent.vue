@@ -56,12 +56,12 @@ const { isIPythonEmbed } = window;
         />
         <main
             :class="[
-                'w-full bg-dp-background mx-auto pb-4',
+                'w-full bg-dip-background mx-auto pb-4',
                 p.reportWidthClass,
             ]"
             data-cy="report-component"
         >
-            <div class="flex flex-col justify-end bg-dp-background">
+            <div class="flex flex-col justify-end bg-dip-background">
                 <div class="sm:flex block">
                     <div class="flex-1 flex flex-col min-w-0">
                         <div class="grow px-4">

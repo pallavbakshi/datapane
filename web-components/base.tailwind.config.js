@@ -9,16 +9,16 @@ module.exports = {
     theme: {
         fontFamily: {
             ...fontFamily,
-            "dp-prose": "var(--dp-font-family)",
+            "dip-prose": "var(--dip-font-family)",
         },
         extend: {
             colors: {
-                "dp-accent-light": "var(--dp-accent-secondary-color)",
-                "dp-accent": "var(--dp-accent-color)",
-                "dp-accent-text": "var(--dp-accent-text)",
-                "dp-background": "var(--dp-bg-color)",
-                "dp-light-gray": "var(--dp-light-gray)",
-                "dp-dark-gray": "var(--dp-dark-gray)",
+                "dip-accent-light": "var(--dip-accent-secondary-color)",
+                "dip-accent": "var(--dip-accent-color)",
+                "dip-accent-text": "var(--dip-accent-text)",
+                "dip-background": "var(--dip-bg-color)",
+                "dip-light-gray": "var(--dip-light-gray)",
+                "dip-dark-gray": "var(--dip-dark-gray)",
             },
             typography: {
                 DEFAULT: {
@@ -30,11 +30,11 @@ module.exports = {
                         "code::before": false,
                         "code::after": false,
                         p: {
-                            "text-align": "var(--dp-text-align)",
+                            "text-align": "var(--dip-text-align)",
                             hyphens: "auto",
                         },
                         li: {
-                            "text-align": "var(--dp-text-align)",
+                            "text-align": "var(--dip-text-align)",
                             hyphens: "auto",
                         },
                     },
@@ -73,16 +73,6 @@ module.exports = {
             "5xl": "3rem",
             "6xl": "4rem",
         },
-    },
-    variants: {
-        extend: {
-            backgroundColor: ["active", "odd"],
-            textColor: ["active"],
-            display: ["group-hover"],
-            opacity: ["disabled"],
-            cursor: ["disabled"],
-        },
-        opacity: ["responsive", "hover", "focus", "disabled"],
     },
     plugins: [
         require("@tailwindcss/forms"),

@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 import vega_datasets as vd
 
-from datapane.common import ArrowFormat, SList, log
-from datapane.common.df_processor import (
+from datainpane.common import ArrowFormat, SList, log
+from datainpane.common.df_processor import (
     PD_VERSION,
     convert_axis,
     downcast_numbers,
@@ -241,7 +241,7 @@ def test_e2e_df_processing(tmp_path: Path):
             float_col=[(x + 0.1) for x in range(30)],
             # store time as duration
             time_col=[timedelta(seconds=x) for x in range(30)],
-            date_col=[datetime.utcnow() for x in range(30)],
+            date_col=[datetime.now(datetime.timezone.utc) for x in range(30)],
             obj_col=[(str(x), str(x)) for x in range(30)],
             cat_obj_col=[("a", "b") for x in range(30)],
         )
@@ -257,7 +257,7 @@ def test_e2e_df_processing(tmp_path: Path):
             int_na_col=[x for x in range(30)] + [np.nan, np.nan],
             float_col=[(x + 0.1) for x in range(30)] + [np.nan, np.nan],
             time_col=[timedelta(seconds=x) for x in range(30)] + [pd.NaT, pd.NaT],
-            date_col=[datetime.utcnow() for x in range(30)] + [pd.NaT, pd.NaT],
+            date_col=[datetime.now(datetime.timezone.utc) for x in range(30)] + [pd.NaT, pd.NaT],
         )
     )
     _test_df(df, ["string", "category", "UInt8", "Float64", "string", "datetime64[ns]"])

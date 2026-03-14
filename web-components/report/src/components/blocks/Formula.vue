@@ -26,7 +26,7 @@ const formulaRef = (node: any) => {
     />
     <div
         data-cy="block-formula"
-        className="w-full overflow-y-hidden bg-white flex justify-center"
+        class="w-full overflow-y-hidden bg-white flex justify-center"
         :ref="formulaRef"
     />
 </template>

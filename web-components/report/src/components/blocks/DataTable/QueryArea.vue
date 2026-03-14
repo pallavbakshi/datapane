@@ -47,14 +47,14 @@ onMounted(() => {
                     @click="emit('run-query')"
                     icon="fa fa-play"
                     data-cy="btn-run-query"
-                    class="w-28 dp-btn-primary"
+                    class="w-28 dip-btn-primary"
                 >
                     Run Query
                 </dp-button>
                 <dp-button
                     @click="emit('clear-query')"
                     icon="fa fa-undo"
-                    class="ml-2 w-28 dp-btn-secondary-gray"
+                    class="ml-2 w-28 dip-btn-secondary-gray"
                     data-cy="btn-reset-data"
                 >
                     Reset Data

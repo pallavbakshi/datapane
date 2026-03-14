@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "datapane-docs-beta"
+name = "datainpane-docs-beta"
 version = "0.1.0"
-description = "Datapane Docs"
-authors = ["Datapane <info@datapane.com>"]
+description = "Data In Pane Docs"
+authors = ["Data In Pane <info@datainpane.com>"]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.12.0"
-datapane = { path = "../python-client", develop = true, extras= ["plotting"] }
+python = ">=3.12,<4.0.0"
+datainpane = { path = "../python-client", develop = true, extras= ["plotting"] }
 
 # mkdocs
 mkdocs-redirects = "^1.2.0"
@@ -17,15 +17,10 @@ mknotebooks = "^0.8.0"
 # DS helpers
 jupyterlab = "^3.4.3"
 seaborn = "^0.11.2"
-openpyxl = "^3.0.10"
-SQLAlchemy = "^1.4.39"
-pandas-datareader = "^0.10.0"
-pytrends = "^4.8.0"
-nltk = "^3.7"
 
 [tool.poetry.group.dev.dependencies]
 
 
 [build-system]
-requires = ["poetry~=1.4.2"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

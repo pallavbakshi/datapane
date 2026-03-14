@@ -8,7 +8,7 @@ const editedTestComment = makeTextComment();
 
 describe("Report Social", () => {
     before(() => {
-        cy.dpLogin();
+        cy.dipLogin();
     });
 
     beforeEach(() => {

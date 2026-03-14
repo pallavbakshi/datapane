@@ -33,17 +33,17 @@ const prevPage = () => {
         <div class="-mt-px h-12 w-0 flex-1 flex">
             <a
                 :class="[
-                    'border-t-2 h-12 border-transparent pl-2 pr-1 inline-flex items-center text-sm font-medium text-dp-light-gray',
+                    'border-t-2 h-12 border-transparent pl-2 pr-1 inline-flex items-center text-sm font-medium text-dip-light-gray',
                     {
                         'cursor-default opacity-40': p.pageNumber === 0,
-                        'cursor-pointer hover:text-dp-dark-gray hover:border-gray-300':
+                        'cursor-pointer hover:text-dip-dark-gray hover:border-gray-300':
                             p.pageNumber !== 0,
                     },
                 ]"
                 @click="prevPage"
             >
                 <svg
-                    class="mr-3 h-5 w-5 text-dp-light-gray"
+                    class="mr-3 h-5 w-5 text-dip-light-gray"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -59,7 +59,7 @@ const prevPage = () => {
             </a>
         </div>
         <div
-            class="hidden md:-mt-px md:flex text-sm text-dp-light-gray cursor-pointer"
+            class="hidden md:-mt-px md:flex text-sm text-dip-light-gray cursor-pointer"
             @click="scrollToTop"
         >
             Back to Top
@@ -68,18 +68,18 @@ const prevPage = () => {
             <a
                 @click="nextPage"
                 :class="[
-                    'border-t-2 h-12 border-transparent pr-2 pl-1 inline-flex items-center text-sm font-medium text-dp-light-gray',
+                    'border-t-2 h-12 border-transparent pr-2 pl-1 inline-flex items-center text-sm font-medium text-dip-light-gray',
                     {
                         'cursor-default opacity-40':
                             p.pageNumber === p.numPages - 1,
-                        'cursor-pointer hover:text-dp-dark-gray hover:border-gray-300':
+                        'cursor-pointer hover:text-dip-dark-gray hover:border-gray-300':
                             p.pageNumber !== p.numPages - 1,
                     },
                 ]"
             >
                 <div>Next</div>
                 <svg
-                    class="ml-3 h-5 w-5 text-dp-light-gray"
+                    class="ml-3 h-5 w-5 text-dip-light-gray"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"

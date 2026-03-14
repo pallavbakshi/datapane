@@ -1,6 +1,6 @@
-# datapane-docs
+# datainpane-docs
 
-The Datapane documentation.
+The Data In Pane documentation.
 
 ## Requirements
 
@@ -14,7 +14,7 @@ The Datapane documentation.
 
 ## Generating the docs
 
-1. Run `poetry run ./nbbuild.sh` to execute all Jupyter notebooks and generate Datapane apps and image previews.
+1. Run `poetry run ./nbbuild.sh` to execute all Jupyter notebooks and generate Data In Pane apps and image previews.
 2. Run `poetry run mkdocs build` to generate static site in `site/`.
 
 `poetry run mkdocs serve` can be used to serve locally.
@@ -30,7 +30,7 @@ wrangler pages dev --live-reload
 Use metadata to show or hide input/output cells in notebooks.
 
 -   `remove_input`,
--   `remove_all_output`, e.g. for the cells outputting information after calling `.save()` or `.upload()`.
+-   `remove_all_output`, e.g. for the cells outputting information after calling `.save()`.
 -   `remove_cell`, e.g. when you want something executed without displaying input or output.
 
 ## Contributing
@@ -47,7 +47,7 @@ git config filter.clear-notebook-output.clean "./public-docs/clear-notebook-outp
 
 ## Deploying
 
-We use Cloudflare Pages for hosting the docs, under the project name `datapane-docs`.
+We use Cloudflare Pages for hosting the docs, under the project name `datainpane-docs`.
 
 You will need `wrangler` 2.x [installed][wrangler-install].
 

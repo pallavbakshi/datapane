@@ -4,8 +4,8 @@ from pathlib import Path
 
 from pytil.various import join_multiline
 
-# import system datapane, not local file
-import datapane as dp
+# import system datainpane, not local file
+import datainpane as dip
 
 # import and run bundled file, and stdout
 try:
@@ -21,8 +21,8 @@ print("ran app")
 # check env values and params
 assert os.environ["ENV_VAR"] == "env_value"
 print(f"ENV_VAR={os.environ['ENV_VAR']}")
-print(f"p2={dp.Params['p2']}")
-p4 = dp.Params.get("p4")
+print(f"p2={dip.Params['p2']}")
+p4 = dip.Params.get("p4")
 if p4:
     print(f"p4={p4.read_text()}")
 
@@ -34,10 +34,10 @@ c_json = json.loads(c_txt)
 print(c_json["HELLO"])
 print("SAMPLE OUTPUT")
 # DP Results & 3rd-party libs
-if dp.Params["p3"]:
+if dip.Params["p3"]:
     t = """
 hello
 ,
 world!
 """
-    dp.Result.set(join_multiline(t))
+    dip.Result.set(join_multiline(t))

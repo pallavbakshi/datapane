@@ -23,7 +23,7 @@ const p = defineProps<{
 }>();
 
 // Disable function runs for local reports
-const functionRunDisabled = window.dpLocal && !window.dpAppRunner;
+const functionRunDisabled = window.dipLocal && !window.dipAppRunner;
 
 const scheduleInterval = ref<ReturnType<typeof setInterval> | null>(null);
 const formId = uuid4();

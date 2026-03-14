@@ -83,7 +83,7 @@ md-nav__title {
 }
 
 .md-typeset .result {
-    border: 0.05remsolidvar (--md-code-bg-color);
+    border: 0.05rem solid var(--md-code-bg-color);
     border-bottom-left-radius: 0.1rem;
     border-bottom-right-radius: 0.1rem;
     border-top-width: 0.1rem;

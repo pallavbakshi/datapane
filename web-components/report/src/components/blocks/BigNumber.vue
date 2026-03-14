@@ -32,7 +32,7 @@ const p = defineProps<{
                         class="mt-1 flex justify-between items-baseline md:block lg:flex"
                     >
                         <div
-                            class="flex items-baseline text-4xl leading-8 font-semibold text-dp-accent"
+                            class="flex items-baseline text-4xl leading-8 font-semibold text-dip-accent"
                         >
                             {{ p.value }}
                         </div>

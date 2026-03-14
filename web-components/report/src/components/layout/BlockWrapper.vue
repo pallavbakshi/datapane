@@ -12,7 +12,6 @@ const p = defineProps<{
 }>();
 
 const { caption, count, captionType } = toRefs(p.figure);
-const singleBlockEmbed = false;
 </script>
 
 <template>
@@ -28,7 +27,7 @@ const singleBlockEmbed = false;
         <slot />
         <div
             v-if="caption"
-            class="text-sm text-dp-light-gray italic text-justify"
+            class="text-sm text-dip-light-gray italic text-justify"
         >
             <b>{{ captionType }} {{ count }}</b>
             {{ caption }}

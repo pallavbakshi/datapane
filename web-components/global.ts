@@ -1,14 +1,14 @@
 declare global {
     interface Window {
         isIPythonEmbed: boolean;
-        dpLocal: boolean;
+        dipLocal: boolean;
         reportProps?: any;
         posthog: any;
         hasPosthog: any;
-        dpAppRunner: boolean;
-        dpAuthorId: string;
-        dpReportId: string;
-        dpLocalViewEvent: any;
+        dipAppRunner: boolean;
+        dipAuthorId: string;
+        dipReportId: string;
+        dipLocalViewEvent: any;
         Alpine: any;
         $testResources: any;
         errorHandler: any;

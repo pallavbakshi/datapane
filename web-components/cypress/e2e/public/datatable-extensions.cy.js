@@ -33,7 +33,7 @@ const interceptExport = (format, doc) => {
 
 describe("Report datatable block extensions", () => {
     before(() => {
-        cy.dpLogin();
+        cy.dipLogin();
     });
 
     beforeEach(() => {

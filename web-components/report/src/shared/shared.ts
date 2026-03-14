@@ -17,7 +17,7 @@ export const parseError = (e: unknown): string => {
      */
     if (e instanceof AxiosError) {
         const errHeader: string | undefined =
-            e.response?.headers["datapane-error"];
+            e.response?.headers["datainpane-error"];
         if (errHeader === "unknown-session") {
             return "Session validation failed: refreshing the browser may resolve this";
         }

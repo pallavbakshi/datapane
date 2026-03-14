@@ -1,16 +1,16 @@
-import datapane as dp
-import datapane.blocks.text
+import datainpane as dip
+import datainpane.blocks.text
 
-file_param = dp.Params.get("__FILE__")
-str_param = dp.Params.get("__STRING__REQUIRED__")
-int_param = dp.Params.get("__INT__")
-float_param = dp.Params.get("__FLOAT__")
+file_param = dip.Params.get("__FILE__")
+str_param = dip.Params.get("__STRING__REQUIRED__")
+int_param = dip.Params.get("__INT__")
+float_param = dip.Params.get("__FLOAT__")
 
-app = dp.App(
-    datapane.blocks.inline_text.Text(str_param),
-    datapane.blocks.inline_text.Text(str(int_param)),
-    datapane.blocks.inline_text.Text(str(float_param)),
-    datapane.blocks.inline_text.Text(file_param.read_text()),
+app = dip.App(
+    datainpane.blocks.inline_text.Text(str_param),
+    datainpane.blocks.inline_text.Text(str(int_param)),
+    datainpane.blocks.inline_text.Text(str(float_param)),
+    datainpane.blocks.inline_text.Text(file_param.read_text()),
 )
 
-dp.upload_report(app, name="params-test-report", overwrite=True)
+dip.upload_report(app, name="params-test-report", overwrite=True)
