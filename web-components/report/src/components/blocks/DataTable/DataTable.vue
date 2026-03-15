@@ -55,7 +55,7 @@ const DISTINCT_CATEGORIES_LIMIT = 8; // TODO - what is the real categories limit
 
 <script setup lang="ts">
 import { computed, ref, ComputedRef } from "vue";
-import { defineCustomElements } from "@revolist/revogrid/custom-element";
+import { defineCustomElements } from "@revolist/revogrid/loader";
 import { formatNumber } from "./shared";
 import { ExportType } from "../../../data-model/blocks";
 import TableHeader from "./Header.vue";
