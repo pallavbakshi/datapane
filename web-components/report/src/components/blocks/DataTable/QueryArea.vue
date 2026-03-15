@@ -1,47 +1,61 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 import DpButton from "../../../shared/DPButton.vue";
-import "codemirror/mode/sql/sql.js";
-import "codemirror/addon/display/autorefresh.js";
-import CodeMirror from "codemirror";
+import { EditorView, keymap } from "@codemirror/view";
+import { EditorState } from "@codemirror/state";
+import { sql } from "@codemirror/lang-sql";
+import { basicSetup } from "codemirror";
 
 const p = defineProps<{
     initialQuery: string;
     errors?: string;
 }>();
 
-const CM_OPTIONS = {
-    theme: "eclipse",
-    mode: "sql",
-    lineNumbers: false,
-    autoRefresh: true,
-};
-
 const emit = defineEmits(["query-change", "run-query", "clear-query"]);
-const cmEl = ref<HTMLTextAreaElement>();
-const cmInstance = ref<any>();
+const cmEl = ref<HTMLDivElement>();
+let view: EditorView | null = null;
 
-const emitQueryChange = (query: string) => void emit("query-change", query);
+const eclipseTheme = EditorView.theme({
+    "&": { height: "100%" },
+    ".cm-scroller": { overflow: "auto" },
+    ".cm-content": { fontFamily: "monospace" },
+});
 
 onMounted(() => {
     if (cmEl.value) {
-        // Set up codemirror instance on mount
-        cmInstance.value = CodeMirror.fromTextArea(cmEl.value, CM_OPTIONS);
-        cmInstance.value.on("change", (doc: any) => {
-            // Keep CM editor in sync with DataTable query ref
-            emitQueryChange(doc.getValue());
+        view = new EditorView({
+            state: EditorState.create({
+                doc: p.initialQuery,
+                extensions: [
+                    basicSetup,
+                    sql(),
+                    eclipseTheme,
+                    EditorView.lineWrapping,
+                    EditorView.updateListener.of((update) => {
+                        if (update.docChanged) {
+                            emit("query-change", update.state.doc.toString());
+                        }
+                    }),
+                ],
+            }),
+            parent: cmEl.value,
         });
-        emitQueryChange(cmInstance.value.getValue());
+        emit("query-change", p.initialQuery);
     } else {
-        console.error("Couldn't find codemirror textarea element");
+        console.error("Couldn't find codemirror container element");
     }
+});
+
+onBeforeUnmount(() => {
+    view?.destroy();
+    view = null;
 });
 </script>
 
 <template>
     <div class="h-48 flex flex-col justify-start border-b border-gray-200">
         <div class="flex flex-col flex-fixed h-full query-container">
-            <textarea ref="cmEl" :value="p.initialQuery" />
+            <div ref="cmEl" class="cm-container" />
             <div class="flex justify-start flex-fixed my-2 px-2">
                 <dp-button
                     @click="emit('run-query')"
@@ -66,3 +80,10 @@ onMounted(() => {
         {{ p.errors }}
     </div>
 </template>
+
+<style scoped>
+.cm-container {
+    flex: 1;
+    overflow: hidden;
+}
+</style>

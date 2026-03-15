@@ -81,8 +81,10 @@ describe("Report datatable block extensions", () => {
 
         cy.get("[data-cy=btn-open-query").click();
 
-        cy.get(".CodeMirror").then((editor) => {
-            editor[0].CodeMirror.setValue("SELECT SUM(A) FROM $table");
+        cy.get(".cm-editor .cm-content").then((el) => {
+            // CM6: set content via the contenteditable div
+            el[0].textContent = "SELECT SUM(A) FROM $table";
+            el[0].dispatchEvent(new Event("input", { bubbles: true }));
             cy.get("[data-cy=btn-run-query").click();
             cy.get(".rgRow").should("have.length", 2);
             cy.get("[data-cy=btn-reset-data]").click();
@@ -95,8 +97,9 @@ describe("Report datatable block extensions", () => {
 
         cy.get("[data-cy=btn-open-query").click();
 
-        cy.get(".CodeMirror").then((editor) => {
-            editor[0].CodeMirror.setValue("should err");
+        cy.get(".cm-editor .cm-content").then((el) => {
+            el[0].textContent = "should err";
+            el[0].dispatchEvent(new Event("input", { bubbles: true }));
             cy.get("[data-cy=btn-run-query").click();
             cy.get("[data-cy=alasql-error-msg]").should("exist");
             cy.get("[data-cy=btn-reset-data").click();
