@@ -21,12 +21,12 @@
 
 .multiselect__tag,
 .multiselect__option--highlight {
-    background: var(--dp-accent-color) !important;
+    background: var(--dip-accent-color) !important;
 }
 
 .multiselect__tag-icon:after,
 .multiselect__option--highlight {
-    color: var(--dp-accent-text) !important;
+    color: var(--dip-accent-text) !important;
 }
 
 .multiselect__input[type="text"]:focus {
@@ -43,8 +43,8 @@
 }
 
 input[name="parameter_files"]::file-selector-button {
-    background: var(--dp-accent-color) !important;
-    color: var(--dp-accent-text) !important;
+    background: var(--dip-accent-color) !important;
+    color: var(--dip-accent-text) !important;
     @apply rounded-md;
 }
 

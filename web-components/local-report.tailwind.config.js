@@ -6,7 +6,6 @@ const { colors: fontFamily } = defaultTheme;
 
 config.content = [
     "./report/src/**/*.{vue,js,ts}",
-    "../python-client/src/datainpane/resources/local_report/bottle_templates/*.html",
     "../python-client/src/datainpane/resources/html_templates/*.html",
 ];
 

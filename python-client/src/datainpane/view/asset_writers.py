@@ -14,8 +14,6 @@ from io import TextIOWrapper
 import pandas as pd
 from altair.utils import SchemaBase
 from multimethod import multimethod
-from packaging import version as v
-from packaging.specifiers import SpecifierSet
 from pandas.io.formats.style import Styler
 
 from datainpane import optional_libs as opt
@@ -23,18 +21,6 @@ from datainpane.client import DPClientError, log
 from datainpane.common import ArrowFormat
 
 from .xml_visitor import AssetMeta
-
-# NOTE - need to update this and keep in sync with JS
-BOKEH_V_SPECIFIER = SpecifierSet(">=3.0.0")
-PLOTLY_V_SPECIFIER = SpecifierSet(">=4.0.0")
-FOLIUM_V_SPECIFIER = SpecifierSet(">=0.12.0")
-
-
-def _check_version(name: str, _v: v.Version, ss: SpecifierSet):
-    if _v not in ss:
-        log.warning(
-            f"{name} version {_v} is not supported, these plots may not display correctly, please install version {ss}"
-        )
 
 
 class DPTextIOWrapper(TextIOWrapper):
@@ -110,8 +96,6 @@ class HTMLTableWriter:
 
 
 class PlotWriter:
-    obj_type: t.Any
-
     # Altair (always installed)
     @multimethod
     def get_meta(self, x: SchemaBase) -> AssetMeta:

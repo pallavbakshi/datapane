@@ -118,11 +118,9 @@ def demo() -> Blocks:
         return fig
 
     def _gen_matplotlib():
-        # pd.set_option("plotting.backend", "matplotlib")
         fig, ax = plt.subplots()
         df = gen_df()
         ax.plot(df["x"], df["y"])
-        # gen_df().plot.scatter("x", "y", ax=ax)
         return fig
 
     def _gen_html(w: int = 30, h: int = 30):
@@ -307,7 +305,6 @@ You can embed any URLs that spport the OEmbed protocol, including YouTube and Tw
 
 ```python
 dip.Embed("https://www.youtube.com/watch?v=JDe14ulcfLA")
-dip.Embed("https://twitter.com/datapaneapp/status/1300831345413890050")
 ```
 
 {{embed}}
@@ -348,7 +345,6 @@ dip.Attachment(data=[1,2,3])
     )
     embed = b.Group(
         b.Embed("https://www.youtube.com/watch?v=JDe14ulcfLA", name="youtube_embed"),
-        b.Embed("https://twitter.com/datapaneapp/status/1300831345413890050"),
         columns=2,
     )
     media = b.Group(

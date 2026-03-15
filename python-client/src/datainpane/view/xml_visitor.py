@@ -50,10 +50,6 @@ class XMLBuilder(ViewVisitor):
             **mk_attribs(version="1", fragment=fragment),
         )
 
-    @property
-    def store_count(self) -> int:
-        return len(self.store.files)
-
     def add_element(self, _: BaseBlock, e: etree.Element) -> XMLBuilder:
         """Add an element to the list of nodes at the current XML tree location"""
         self.elements.append(e)
@@ -107,10 +103,7 @@ class XMLBuilder(ViewVisitor):
 
         e: etree._Element = _E(
             type=fe.mime,
-            # size=conv_attrib(fe.size),
-            # hash=fe.hash,
             **{**b._attributes, **b.get_file_attribs()},
-            # src=f"attachment://{self.store_count}",
             src=f"ref://{fe.hash}",
         )
 

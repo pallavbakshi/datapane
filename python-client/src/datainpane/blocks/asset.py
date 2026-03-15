@@ -120,12 +120,12 @@ class Attachment(AssetBlock):
 
 class Plot(AssetBlock):
     """
-    Datapane supports all major Python visualization libraries, allowing you to add interactive plots and visualizations to your app.
+    Data In Pane supports all major Python visualization libraries, allowing you to add interactive plots and visualizations to your app.
 
     The `dp.Plot` block takes a plot object from one of the supported Python visualization libraries and renders it in your app.
 
     !!! info
-        Datapane will automatically wrap your visualization or plot in a `dp.Plot` block if you pass it into your app directly.
+        Data In Pane will automatically wrap your visualization or plot in a `dp.Plot` block if you pass it into your app directly.
     """
 
     _tag = "Plot"

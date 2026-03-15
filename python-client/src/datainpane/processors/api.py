@@ -1,5 +1,5 @@
 """
-Datapane Processors
+Data In Pane Processors
 
 API for processing Views, e.g. rendering it locally and publishing to a remote server
 """
@@ -24,7 +24,7 @@ from .processors import (
 )
 from .types import Formatting, Pipeline, ViewState
 
-__all__ = ["upload_report", "save_report", "build_report", "stringify_report"]
+__all__ = ["save_report", "build_report", "stringify_report"]
 
 
 ################################################################################
@@ -123,16 +123,3 @@ def stringify_report(
     )
 
     return report_html
-
-
-def upload_report(
-    *args,
-    **kwargs,
-) -> None:
-    """
-    (No longer supported).
-    Upload as a report, including its attached assets, to the logged-in Datapane Server.
-    """
-    raise DPClientError(
-        "Datapane Cloud is now read-only and does not support Report uploading, only local, saved HTML report output is supported"
-    )

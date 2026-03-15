@@ -200,7 +200,3 @@ class FileStore:
         """Build a json structure suitable for embedding in a html file, json-rpc response, etc."""
         x: FileEntry  # noqa: F842
         return {x.hash: x.as_dict() for x in self.files}
-
-    def get_entry(self, hash: str) -> FileEntry | None:
-        # TODO - change self.files to a dict[hash, FileEntry]?
-        return next((f for f in self.files if f.hash == hash), None)

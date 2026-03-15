@@ -104,14 +104,11 @@ class DataBlock(BaseBlock):
 
 BlockOrPrimitive = t.Union["BaseBlock", t.Any]  # TODO - expand
 BlockList = list["BaseBlock"]
-# Block = BaseBlock
 
 
 def wrap_block(b: BlockOrPrimitive) -> Block:
     from .wrappers import convert_to_block
 
-    # if isinstance(b, Page):
-    #     raise DPClientError("Page objects can only be at the top-level")
     if not isinstance(b, BaseBlock):
         # import here as a very slow module due to nested imports
         # from ..files import convert

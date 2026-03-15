@@ -1,5 +1,5 @@
 """
-Datapane helper functions to improve the Datapane UX in IPython notebooks
+Data In Pane helper functions to improve the Data In Pane UX in IPython notebooks
 """
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ if typing.TYPE_CHECKING:
 
 
 def output_cell_to_block(cell: dict, ipython_output_cache: dict) -> BaseBlock | None:
-    """Convert a IPython notebook output cell to a Datapane Block"""
+    """Convert a IPython notebook output cell to a Data In Pane Block"""
     from datainpane.blocks import wrap_block
 
     # Get the output object from the IPython output cache
@@ -72,7 +72,7 @@ def check_notebook_cache_parity(notebook_json: dict, ipython_input_cache: list) 
 def cells_to_blocks(
     opt_out: bool = True, show_code: bool = False, show_markdown: bool = True
 ) -> list[BaseBlock]:
-    """Convert IPython notebook cells to a list of Datapane Blocks
+    """Convert IPython notebook cells to a list of Data In Pane Blocks
 
     Recognized cell tags:
         - `dp-exclude` - Exclude this cell (when opt_out=True)

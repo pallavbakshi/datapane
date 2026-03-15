@@ -3,7 +3,6 @@ from __future__ import annotations
 import locale
 import logging
 import mimetypes
-import re
 import sys
 import typing as t
 from pathlib import Path
@@ -76,38 +75,3 @@ def utf_read_text(file: Path) -> str:
     else:
         # for linux/macOS assume utf-8
         return file.read_text()
-
-
-def dict_drop_empty(xs: dict | None = None, none_only: bool = False, **kwargs) -> dict:
-    """Return a new dict with the empty/falsey values removed"""
-    xs = {**(xs or {}), **kwargs}
-
-    if none_only:
-        return {k: v for (k, v) in xs.items() if v is not None}
-    else:
-        return {k: v for (k, v) in xs.items() if v or isinstance(v, bool)}
-
-
-def should_compress_mime_type_for_upload(mime_type: str) -> bool:
-    # This strategy is based on:
-    # - looking at mime type databases used by `mimetypes` module
-    # - our custom mime types in double_ext_map
-    # - some other online sources that capture real-world usage:
-    #   - https://letstalkaboutwebperf.com/en/gzip-brotli-server-config/
-    #   - https://github.com/h5bp/server-configs-nginx/blob/main/mime.types
-    return any(pattern.search(mime_type) for pattern in _SHOULD_COMPRESS_MIME_TYPE_REGEXPS)
-
-
-_SHOULD_COMPRESS_MIME_TYPE_REGEXPS = [
-    re.compile(p)
-    for p in [
-        r"^text/",
-        r"\+json$",
-        r"\+xml$",
-        r"\+html$",
-        r"^application/json$",
-        r"^application/vnd\.pickle\+binary$",
-        r"^application/vnd\.apache\.arrow\+binary$",
-        r"^application/xml$",
-    ]
-]

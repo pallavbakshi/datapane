@@ -18,7 +18,6 @@ class ViewState:
     file_entry_klass: dc.InitVar[type[FileEntry]]
     store: FileStore = dc.field(init=False)
     view_xml: ViewXML = ""
-    entries: dict[str, str] = dc.field(default_factory=dict)
     dir_path: dc.InitVar[Path | None] = None
 
     def __post_init__(self, file_entry_klass, dir_path):

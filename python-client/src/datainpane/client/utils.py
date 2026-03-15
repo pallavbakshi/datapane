@@ -3,17 +3,13 @@ from __future__ import annotations
 import enum
 import logging
 import logging.config
-import os
 import string
 import sys
 import typing as t
 
 ##############
 # Client constants
-TEST_ENV = bool(os.environ.get("DP_TEST_ENV", ""))
-IN_PYTEST = "pytest" in sys.modules  # and TEST_ENV
-# we're running on datainpane platform
-ON_DATAPANE: bool = "DIP_ON_DATAINPANE" in os.environ
+IN_PYTEST = "pytest" in sys.modules
 
 
 ################################################################################
@@ -164,9 +160,7 @@ def display_msg(text: str, **params: str):
 class DPMode(enum.Enum):
     """DP can operate in multiple modes as specified by this Enum"""
 
-    SCRIPT = enum.auto()  # run from the cmd-line
     LIBRARY = enum.auto()  # imported into a process
-    FRAMEWORK = enum.auto()  # running dp-runner
 
 
 # default in Library mode

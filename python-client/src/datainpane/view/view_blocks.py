@@ -84,10 +84,6 @@ class Blocks(ContainerBlock):
             blocks = cls(x)
         return blocks
 
-    @property
-    def has_compute(self):
-        return False
-
 
 class View(Blocks):
     pass
@@ -111,19 +107,10 @@ class App(Blocks):
             )
         warnings.warn(
             "Instead of dp.App(), please see our newer API dp.Blocks(). "
-            + "Instead of App.upload(), App.save_report() etc., you can use dp.upload_report(blocks), dp.save_report(blocks)",
+            + "Instead of App.save_report() etc., you can use dp.save_report(blocks)",
             DeprecationWarning,
         )
         super().__init__(*arg_blocks, blocks=blocks, **kwargs)
-
-    def upload(
-        self,
-        *args,
-        **kwargs,
-    ) -> None:
-        from ..processors import upload_report
-
-        upload_report(*args, **kwargs)
 
     def save(
         self,

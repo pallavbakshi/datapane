@@ -9,21 +9,7 @@ from .utils import log
 
 
 class Config:
-    @property
-    def is_public(self) -> bool:
-        return True
-
-    @property
-    def is_org(self) -> bool:
-        return not self.is_public
-
-    @property
-    def is_authenticated(self) -> bool:
-        return False
-
-    @property
-    def is_anonymous(self) -> bool:
-        return True
+    pass
 
 
 config: Config | None = None

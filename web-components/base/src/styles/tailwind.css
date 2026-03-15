@@ -56,47 +56,8 @@ h3 {
     @apply border-gray-300 text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:ring ring-opacity-50 ring-blue-700 focus:border-blue-300 active:text-gray-800 active:bg-gray-50;
 }
 
-.dip-btn-dark {
-    @apply border-transparent text-white bg-gray-700 hover:bg-gray-600 hover:text-gray-200 focus:outline-none focus:ring ring-opacity-50 ring-gray-700 focus:border-gray-800;
-}
-
-.dip-btn-dark-outline {
-    @apply border-transparent text-gray-300 hover:text-white hover:bg-gray-700 focus:text-white focus:bg-gray-700;
-}
-
 .dip-btn-sm {
     @apply inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2;
-}
-
-.dip-btn-github {
-    background-color: #eee;
-    background-image: -webkit-gradient(
-        linear,
-        left top,
-        left bottom,
-        color-stop(0, #fcfcfc),
-        to(#eee)
-    );
-    background-image: linear-gradient(to bottom, #fcfcfc 0, #eee 100%);
-    background-repeat: no-repeat;
-    border: 1px solid #d5d5d5;
-    color: #333;
-    @apply py-1;
-}
-
-.dip-btn-github:focus,
-.dip-btn-github:hover {
-    text-decoration: none;
-    background-color: #ddd;
-    background-image: -webkit-gradient(
-        linear,
-        left top,
-        left bottom,
-        color-stop(0, #eee),
-        to(#ddd)
-    );
-    background-image: linear-gradient(to bottom, #eee 0, #ddd 100%);
-    border-color: #ccc;
 }
 
 .dip-btn-secondary-gray {
@@ -106,10 +67,3 @@ h3 {
 .dip-btn-secondary-danger {
     @apply text-red-700 bg-red-100 hover:bg-red-200 focus:ring-red-500;
 }
-
-/* body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  height: 100%;
-} */

@@ -6,7 +6,6 @@ import os
 import typing as t
 from abc import ABC
 from copy import copy
-from itertools import count
 from os import path as osp
 from pathlib import Path
 from uuid import uuid4
@@ -22,11 +21,7 @@ from datainpane.common import HTML, NPath, timestamp, validate_view_doc
 from datainpane.common.viewxml_utils import ElementT, local_view_resources
 from datainpane.view import PreProcess, XMLBuilder
 
-from .file_store import FileEntry
 from .types import BaseProcessor, Formatting
-
-if t.TYPE_CHECKING:
-    pass
 
 
 class PreProcessView(BaseProcessor):
@@ -109,29 +104,6 @@ class ConvertXML(BaseProcessor):
         return processed_view_doc
 
 
-class PreUploadProcessor(BaseProcessor):
-    def __call__(self, doc: ElementT) -> tuple[str, list[t.BinaryIO]]:
-        """
-        pre-upload pass of the XML doc so can be uploaded to DPCloud
-        modifies the document based on the FileStore
-        """
-
-        # NOTE - this currently relies on all assets existing linearly in document order
-        # in the asset store - if we move to a cas we will need to update the algorithm here
-        # replace ref -> attachment in view
-        # all blocks with a ref
-        refs: list[ElementT] = doc.xpath("/View//*[@src][starts-with(@src, 'ref://')]")
-        for (idx, ref, f_entry) in zip(count(0), refs, self.s.store.files):
-            ref: ElementT
-            f_entry: FileEntry
-            _hash: str = ref.get("src").split("://")[1]
-            ref.set("src", f"attachment://{idx}")
-            assert _hash == f_entry.hash  # sanity check
-
-        self.s.view_xml = etree.tounicode(doc)
-        return (self.s.view_xml, self.s.store.file_list)
-
-
 ###############################################################################
 # HTML Exporting Processors
 class BaseExportHTML(BaseProcessor, ABC):
@@ -209,29 +181,6 @@ class BaseExportHTML(BaseProcessor, ABC):
         )
 
         return html, report_id
-
-
-class ExportBaseHTMLOnly(BaseExportHTML):
-    """Export the base view used to render an App, containing no ViewXML nor Assets"""
-
-    # TODO (JB) - Create base HTML-only template
-    template_name = "local_template.html"
-
-    def __init__(self, debug: bool, formatting: Formatting | None = None):
-        self.debug = debug
-        self.formatting = formatting
-
-    def generate_chrome(self) -> HTML:
-        # TODO - this is a bit hacky
-        self.s = None
-        html, report_id = self._write_html_template("app", formatting=self.formatting, app_runner=True)
-        return HTML(html)
-
-    def get_cdn(self) -> str:
-        return "/web-static" if self.debug else super().get_cdn()
-
-    def __call__(self, _: t.Any) -> None:
-        return None
 
 
 class ExportHTMLInlineAssets(BaseExportHTML):

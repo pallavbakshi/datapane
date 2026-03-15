@@ -4,7 +4,7 @@ from datainpane.client import display_msg
 
 
 class NotebookException(Exception):
-    """Exception raised when a Notebook to Datapane conversion fails."""
+    """Exception raised when a Notebook to Data In Pane conversion fails."""
 
     def _render_traceback_(self):
         display_msg(

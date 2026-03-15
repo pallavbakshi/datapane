@@ -71,7 +71,7 @@ class ContainerBlock(BaseBlock):
 
 class Page(ContainerBlock):
     """
-    Apps on Datapane can have multiple pages, which are presented to users as tabs at the top of your app. These can be used similarly to sheets in an Excel document.
+    Apps on Data In Pane can have multiple pages, which are presented to users as tabs at the top of your app. These can be used similarly to sheets in an Excel document.
 
     To add a page, use the `dp.Page` block at the top-level of your app, and give it a title with the `title` parameter.
 
@@ -117,7 +117,7 @@ class Select(ContainerBlock):
     The user can choose which nested object to view dynamically using either tabs or a dropdown.
 
     !!! note
-        Select expects a list of Blocks, e.g. a Plot or Table, but also includes Select or Groups themselves, but if a Python object is passed, e.g. a Dataframe, Datapane will attempt to convert it automatically.
+        Select expects a list of Blocks, e.g. a Plot or Table, but also includes Select or Groups themselves, but if a Python object is passed, e.g. a Dataframe, Data In Pane will attempt to convert it automatically.
 
     """
 
@@ -152,7 +152,7 @@ class Group(ContainerBlock):
     """
     If you pass a list of blocks (such as `Plot` and `Table`) to an app, they are -- by default -- laid out in a single column with a row per block.
 
-    If you would like to customize the rows and columns, Datapane provides a `Group` block which takes a list of blocks and a number of columns and lays them out in a grid.
+    If you would like to customize the rows and columns, Data In Pane provides a `Group` block which takes a list of blocks and a number of columns and lays them out in a grid.
 
     !!! tip
         As `Group` blocks are blocks themselves, they are composable, and you can create more custom layers of nested blocks, for instance nesting 2 rows in the left column of a 2 column layout

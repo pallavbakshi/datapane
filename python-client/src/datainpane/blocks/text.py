@@ -193,8 +193,6 @@ class Embed(EmbeddedTextBlock):
 
         result = get_embed_url(url, width=width, height=height)
 
-        # if "html" not in result:
-        #     raise DPClientError(f"Can't embed result from provider for URL '{url}'")
         super().__init__(
             content=result.html, name=name, label=label, url=url, title=result.title, provider_name=result.provider
         )

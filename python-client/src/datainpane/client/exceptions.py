@@ -13,37 +13,5 @@ class DPClientError(DPError):
         return add_help_text(super().__str__())
 
 
-class IncompatibleVersionError(DPClientError):
-    pass
-
-
-class UnsupportedResourceError(DPClientError):
-    pass
-
-
-class ReportTooLargeError(DPClientError):
-    pass
-
-
-class InvalidTokenError(DPClientError):
-    pass
-
-
-class UnsupportedFeatureError(DPClientError):
-    pass
-
-
 class InvalidReportError(DPClientError):
     pass
-
-
-class ViewError(DPClientError):
-    pass
-
-
-class MissingCloudPackagesError(DPClientError):
-    def __init__(self, *a, **kw):
-        # quick hack until we setup a conda meta-package for cloud
-        self.args = (
-            "Cloud packages not found, please run `pip install datainpane[cloud]` or `conda install -c conda-forge nbconvert flit-core`",
-        )
