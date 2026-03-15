@@ -14,14 +14,8 @@ const MALICIOUS_HEADER =
     "<style onload=\"window.location.href = 'https://google.com'\"></style><script id='cy-malicious-script'></script>";
 
 describe("Changing a report's style", () => {
-    before(() => {
-        cy.dipLogin();
-    });
-
     beforeEach(() => {
-        Cypress.Cookies.preserveOnce("sessionid", "djdt");
         cy.visit(`${URLS.STYLE_REPORT}settings-visual`);
-        cy.get("#djHideToolBarButton").click();
     });
 
     it("(e2e): Should change the report to a dark theme then reset to default", () => {

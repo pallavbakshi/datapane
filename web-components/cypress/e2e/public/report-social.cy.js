@@ -7,14 +7,8 @@ const testComment = makeTextComment();
 const editedTestComment = makeTextComment();
 
 describe("Report Social", () => {
-    before(() => {
-        cy.dipLogin();
-    });
-
     beforeEach(() => {
-        Cypress.Cookies.preserveOnce("sessionid", "djdt");
         cy.visit(URLS.STYLE_REPORT);
-        cy.get("#djHideToolBarButton").click();
     });
 
     it("(e2e): Should post and edit a comment, then delete", () => {

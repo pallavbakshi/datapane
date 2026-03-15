@@ -7,14 +7,7 @@ export default defineConfig({
     includeShadowDom: true,
     video: false,
     env: {
-        testEmail: "test@datainpane.com",
-        testPassword: "",
-        staffEmail: "support@datainpane.com",
-        staffPassword: "",
         styleReportURL: "",
-        paramsAppURL: "",
-        noParamsAppURL: "",
-        fileURL: "",
     },
     e2e: {
         baseUrl: "http://localhost:8090",

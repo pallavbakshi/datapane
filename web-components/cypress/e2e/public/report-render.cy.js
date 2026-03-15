@@ -3,13 +3,7 @@ import { URLS } from "../../support/constants";
 
 describe("Report rendering", () => {
     before(() => {
-        cy.dipLogin();
         cy.visit(URLS.STYLE_REPORT);
-        cy.get("#djHideToolBarButton").click();
-    });
-
-    beforeEach(() => {
-        Cypress.Cookies.preserveOnce("sessionid", "djdt");
     });
 
     it("Should switch between section tabs successfully", () => {

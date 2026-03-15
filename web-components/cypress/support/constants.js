@@ -3,10 +3,6 @@
 // URLs
 
 export const URLS = {
-    PARAMS_APP: `${Cypress.env("paramsAppURL")}`,
-    NO_PARAMS_APP: `${Cypress.env("noParamsAppURL")}`,
-    SCHEDULE: `${Cypress.env("paramsAppURL")}schedules/create/`,
-    FILE: `${Cypress.env("fileURL")}`,
     STYLE_REPORT: `${Cypress.env("styleReportURL")}`,
 };
 

@@ -12,7 +12,8 @@ from shutil import copyfileobj
 
 from typing import Self
 
-from datainpane._vendor import base64io
+import base64
+
 from datainpane.common import guess_type
 
 SERVED_REPORT_ASSETS_DIR = "assets"
@@ -82,28 +83,31 @@ class DummyFileEntry(FileEntry):
 
 
 class B64FileEntry(FileEntry):
-    """Memory-based b64 file"""
+    """Memory-based b64 file.
 
-    # requires b64io is bytes only and wraps to a bytes file only
-    file: base64io.Base64IO
+    Raw bytes are written to ``self.file`` (a BytesIO). On freeze the raw
+    bytes are base64-encoded and stored in ``self.contents``.
+    """
+
+    file: io.BytesIO
     wrapped: io.BytesIO
     contents: bytes
 
     def __init__(self, ext: str, mime: str | None = None, *a, **kw):
         super().__init__(ext, mime, *a, **kw)
+        # `wrapped` stores the final base64 text; `file` accepts raw bytes
         self.wrapped = io.BytesIO()
-        self.file = base64io.Base64IO(self.wrapped)
+        self.file = io.BytesIO()
 
     def freeze(self) -> None:
         if not self.frozen:
             self.frozen = True
-            # get a reference to the buffer to splice later
-            self.file.close()
-            self.file.flush()
-            self.contents = self.wrapped.getvalue()
-            # calc other properties
+            raw = self.file.getvalue()
+            encoded = base64.b64encode(raw)
+            self.wrapped = io.BytesIO(encoded)
+            self.contents = encoded
             self.hash = hashlib.sha256(self.contents).hexdigest()[:10]
-            self.size = self.wrapped.tell()
+            self.size = len(self.contents)
 
     @property
     def src(self) -> str:

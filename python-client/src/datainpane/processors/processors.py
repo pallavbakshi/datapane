@@ -14,7 +14,7 @@ import importlib.resources as ir
 from lxml import etree
 
 from datainpane import blocks as b
-from datainpane._vendor.bottle import SimpleTemplate
+from datainpane._vendor.simple_template import SimpleTemplate
 from datainpane.client.exceptions import InvalidReportError
 from datainpane.client.utils import display_msg, log, open_in_browser
 from datainpane.common import HTML, NPath, timestamp, validate_view_doc
@@ -131,11 +131,10 @@ class BaseExportHTML(BaseProcessor, ABC):
         return f"https://cdn.jsdelivr.net/gh/{repo}@{ref}/web-components/dist"
 
     def escape_json_htmlsafe(self, obj: t.Any) -> str:
-        """Escape JSON object for embedding in bottle templates."""
+        """Escape JSON object for embedding in SimpleTemplate templates."""
 
         # Taken from Jinja2's |tojson pipe function
         # (https://github.com/pallets/jinja/blob/b7cb6ee6675b12a027c5e7518f832b2926dfe293/src/jinja2/utils.py#L628)
-        # Use of markupsafe is removed, as we use bottle's SimpleTemplate.
         return (
             json.dumps(obj)
             .replace("<", "\\u003c")

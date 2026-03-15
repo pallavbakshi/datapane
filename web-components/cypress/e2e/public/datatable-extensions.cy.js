@@ -32,14 +32,8 @@ const interceptExport = (format, doc) => {
 };
 
 describe("Report datatable block extensions", () => {
-    before(() => {
-        cy.dipLogin();
-    });
-
     beforeEach(() => {
-        Cypress.Cookies.preserveOnce("sessionid", "djdt");
         cy.visit(URLS.STYLE_REPORT);
-        cy.get("#djHideToolBarButton").click();
     });
 
     it("Should export a DataTable CSV with the correct headers and no. rows", () => {

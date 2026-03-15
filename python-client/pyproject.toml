@@ -64,7 +64,6 @@ dev = [
     "types-tabulate>=0.8.9,<0.10.0",
     "pytest-dotenv>=0.5.2",
     "vega-datasets>=0.9.0,<1.0.0",
-    "vendoring==1.2.0",
 ]
 
 [build-system]
@@ -81,20 +80,6 @@ include = '\.pyi?$'
 
 [tool.ruff]
 target-version = "py312"
-
-[tool.vendoring]
-destination = "src/datainpane/_vendor/"
-requirements = "vendor.txt"
-namespace = "datainpane._vendor"
-
-[tool.vendoring.transformations]
-drop = [
-    "bin/",
-]
-
-[tool.vendoring.typing-stubs]
-base64io = []
-bottle = []
 
 [tool.pyright]
 pythonVersion = "3.12"
