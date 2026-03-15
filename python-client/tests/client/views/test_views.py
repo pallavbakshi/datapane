@@ -223,7 +223,7 @@ def test_gen_failing_views():
         _view_to_xml_and_files(v)
 
     # empty text block
-    with pytest.raises(AssertionError):
+    with pytest.raises(ValueError):
         v = dip.Blocks(dip.Text(" "))
         _view_to_xml_and_files(v)
 

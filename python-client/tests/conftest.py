@@ -26,7 +26,7 @@ def dp_setup(request, monkeypatch, tmp_path):
     """
 
     # Init API with full debug logging
-    set_dp_mode(DPMode.SCRIPT)
+    set_dp_mode(DPMode.LIBRARY)
     _setup_dp_logging(verbosity=2)
 
     # Optional init steps

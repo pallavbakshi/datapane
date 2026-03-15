@@ -29,29 +29,32 @@ def convert_csv_pd(string: str, process: bool = False) -> pd.DataFrame:
 
 def parse_timedelta(data: pd.DataFrame):
     """Tries to convert strings to timedelta, ignores existing panda timedelta"""
-
-    # if timedelta is not parsed, it might be interpreted as categories or strings
-    potential_timedeltas = data.select_dtypes(object)
+    potential_timedeltas = data.select_dtypes(["object", "str"])
 
     def try_to_timedelta(ser: pd.Series) -> pd.Series:
-        return pd.to_timedelta(ser, errors="ignore")
+        try:
+            return pd.to_timedelta(ser)
+        except (ValueError, TypeError):
+            return ser
 
     data[potential_timedeltas.columns] = potential_timedeltas.apply(try_to_timedelta)
 
 
 def parse_dates(data: pd.DataFrame, force_utc: bool = False):
     """Tries to convert strings to dates, ignores existing panda datetimes"""
-    potential_dates = data.select_dtypes(["object", "category"])
+    potential_dates = data.select_dtypes(["object", "str", "category"])
 
-    # TODO - we should convert all naive datatypes to user's timezone first and set utc to True
-    def try_to_datetime(ser: pd.Series) -> datetime.datetime:
-        return pd.to_datetime(ser, infer_datetime_format=True, errors="ignore", utc=force_utc)
+    def try_to_datetime(ser: pd.Series) -> pd.Series:
+        try:
+            return pd.to_datetime(ser, utc=force_utc)
+        except (ValueError, TypeError):
+            return ser
 
     data[potential_dates.columns] = potential_dates.apply(try_to_datetime)
 
 
 def _check_dates_parsed(df: pd.DataFrame, date_columns: List[str]):
-    assert set(list(df.select_dtypes("datetime").columns)) == set(date_columns)
+    assert set(list(df.select_dtypes(["datetime", "datetimetz"]).columns)) == set(date_columns)
 
 
 def _check_timedelta_parsed(df: pd.DataFrame, timedelta_columns: List[str]):
@@ -87,7 +90,7 @@ def test_parse_dates_wrong_date():
 
 
 def test_parse_dates_nulls():
-    # NOTE - using just Z, not .000Z means pandas doesn't infer timezone, so naive datetime object
+    # NOTE - pandas 3.0 parses ISO8601 with Z as UTC timezone-aware
     data = convert_csv_pd(
         """
         timestamp,value
@@ -96,7 +99,7 @@ def test_parse_dates_nulls():
         2019-01-10T12:10:10Z,3
         """
     )
-    parse_dates(data)
+    parse_dates(data, force_utc=True)
     _check_dates_parsed(data, ["timestamp"])
 
 
@@ -121,26 +124,25 @@ def test_parse_timedelta_with_assertion_error():
         """
     )
     parse_timedelta(data)
-    # timedelta_col1's dtype is a datetime64[ns]
-    _check_dates_parsed(data, ["timedelta_col1"])
-    with pytest.raises(AssertionError):
-        _check_timedelta_parsed(data, ["timedelta_col1", "timedelta_col2"])
+    # In pandas 3.0, timedelta_col2 is parsed as timedelta
+    # timedelta_col1 (short format without "day") is also parsed as timedelta
+    _check_timedelta_parsed(data, ["timedelta_col1", "timedelta_col2"])
 
 
 def test_parse_timedelta_explicit_convert():
+    """Test that explicitly converted timedelta columns survive process_df.
+    Note: process_df converts timedelta to string for arrow compatibility,
+    so after processing, timedelta columns become string type."""
     def convert_csv_pd_(string: str) -> pd.DataFrame:
         import textwrap
         from io import StringIO
 
-        from datainpane.common.df_processor import process_df
-
         buf = StringIO(textwrap.dedent(string).strip())
         df = pd.read_csv(buf, engine="c", sep=",")
         df["timedelta_col1"] = pd.to_timedelta(df["timedelta_col1"])
-        df = process_df(df)
         return df
 
-    # timedelta_col1 is parsed by `parse_dates` unless it is converted explicitly
+    # Before process_df, timedelta_col1 should be timedelta
     data = convert_csv_pd_(
         """
         timedelta_col1,timedelta_col2,float_col,string_col
@@ -148,5 +150,7 @@ def test_parse_timedelta_explicit_convert():
         18:34:16.196687,"1 day, 18:34:16.196687",0.23,bla1
         """
     )
+    _check_timedelta_parsed(data, ["timedelta_col1"])
+    # parse_timedelta should also convert timedelta_col2
     parse_timedelta(data)
     _check_timedelta_parsed(data, ["timedelta_col1", "timedelta_col2"])

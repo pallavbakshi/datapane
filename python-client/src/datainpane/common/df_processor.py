@@ -28,20 +28,29 @@ def convert_axis(df: pd.DataFrame):
 
 
 def downcast_numbers(data: pd.DataFrame):
-    """Downcast numerics"""
+    """Downcast integer columns to the smallest sufficient dtype"""
+    df_num = data.select_dtypes("integer", exclude=["timedelta"])
+    for col in df_num.columns:
+        ser = data[col]
+        col_min = ser.min()
+        col_max = ser.max()
+        if pd.isna(col_min):
+            continue
 
-    def downcast_ints(ser: pd.Series) -> pd.Series:
-        try:
-            ser = pd.to_numeric(ser)
-            ser = pd.to_numeric(ser)
-        except Exception:
-            pass  # catch failure on Int64Dtype
-        return ser
+        nullable = pd.api.types.is_extension_array_dtype(ser.dtype)
 
-    # A result of downcast(timedelta64[ns]) is int <ns> and hard to understand.
-    # e.g.) 0 days 00:54:38.777572 -> 3278777572000 [ns]
-    df_num = data.select_dtypes("integer", exclude=["timedelta"])  # , pd.Int64Dtype])
-    data[df_num.columns] = df_num.apply(downcast_ints)
+        if col_min >= 0:
+            candidates = [(pd.UInt8Dtype(), np.uint8), (pd.UInt16Dtype(), np.uint16),
+                          (pd.UInt32Dtype(), np.uint32), (pd.UInt64Dtype(), np.uint64)]
+        else:
+            candidates = [(pd.Int8Dtype(), np.int8), (pd.Int16Dtype(), np.int16),
+                          (pd.Int32Dtype(), np.int32), (pd.Int64Dtype(), np.int64)]
+
+        for pd_dtype, np_dtype in candidates:
+            info = np.iinfo(np_dtype)
+            if col_min >= info.min and col_max <= info.max:
+                data[col] = ser.astype(pd_dtype if nullable else np_dtype)
+                break
 
 
 def timedelta_to_str(df: pd.DataFrame):
