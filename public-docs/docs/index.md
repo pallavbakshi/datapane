@@ -1,17 +1,11 @@
-<p >
-  <a href="https://github.com/datainpane/datainpane">
-    <img src="https://datainpane-cdn.com/static/v1/datainpane-logo-dark.svg.br" width="250px" alt="Data In Pane" />
+<p>
+  <a href="https://github.com/pallavbakshi/datapane">
+    <img src="static/datainpane-icon.svg" width="64px" alt="Data In Pane" />
   </a>
 </p>
 
-!!! note
-    Data In Pane is no longer actively maintained.
-
-    We've made the difficult decision to stop driving this project and therefore we will no longer actively respond to issues or pull requests. If you would like to take over maintaining this project independently, please let us know so we can add a link to your forked project on our [GitHub](https://github.com/datainpane/datainpane).
-
-    The final release, `0.17.0`, has been optimized to focus on free local report saving, with unused features and analytics removed, and libraries updated to allow usage for as long as possible.
-
-    Thank You.
+!!! info
+    Data In Pane is a modernized fork of the original Datapane project, updated for Python 3.12+ and modern dependencies. It focuses on free, local report generation — no cloud service required.
 
 ## Overview
 

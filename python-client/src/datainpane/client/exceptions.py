@@ -4,7 +4,7 @@ from datainpane.common import DPError
 
 
 def add_help_text(x: str) -> str:
-    return f"{x}\nPlease run with `dip.enable_logging()`, restart your Jupyter kernel/Python instance, and/or visit https://www.github.com/datainpane/datainpane"
+    return f"{x}\nPlease run with `dip.enable_logging()`, restart your Jupyter kernel/Python instance, and/or visit https://www.github.com/pallavbakshi/datapane"
 
 
 class DPClientError(DPError):

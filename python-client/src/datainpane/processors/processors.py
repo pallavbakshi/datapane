@@ -126,7 +126,7 @@ class BaseExportHTML(BaseProcessor, ABC):
         if cdn_base := os.getenv("DIP_CDN_BASE"):
             return cdn_base
         # Serve built report assets via jsDelivr from the GitHub repo
-        repo = os.getenv("DIP_CDN_REPO", "datainpane/datainpane")
+        repo = os.getenv("DIP_CDN_REPO", "pallavbakshi/datapane")
         ref = os.getenv("DIP_CDN_REF", f"v{__version__}")
         return f"https://cdn.jsdelivr.net/gh/{repo}@{ref}/web-components/dist"
 
