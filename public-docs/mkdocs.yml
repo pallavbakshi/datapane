@@ -35,7 +35,7 @@ nav:
 
 theme:
   name: material
-  logo: static/datainpane-icon-192x192.png
+  logo: static/datainpane-icon.svg
   custom_dir: overrides
   features:
     - navigation.sections
@@ -61,7 +61,7 @@ theme:
   font:
     text: Inter
     code: IBM Plex Mono
-  favicon: static/datainpane-icon-192x192.png
+  favicon: static/datainpane-icon.svg
 
 extra_css:
   - static/extra.css

@@ -77,13 +77,13 @@ def test_saved_report_has_cdn_urls(tmp_path):
 
 
 def test_saved_report_has_inline_favicon(tmp_path):
-    """The favicon should be a data URI, not an external reference."""
+    """The favicon should be an SVG data URI, not an external reference."""
     view = dip.Blocks(dip.Text("# Test"))
     path = tmp_path / "test.html"
     dip.save_report(view, path=str(path))
 
     html = path.read_text()
-    assert "data:image/png;base64," in html
+    assert "data:image/svg+xml;base64," in html
     # Should NOT reference external icon URLs
     assert "datapane-icon" not in html
     assert "datainpane-icon" not in html
