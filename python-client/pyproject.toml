@@ -1,12 +1,12 @@
 [project]
 name = "datainpane"
 version = "0.17.0"
-description = "Data In Pane client library and CLI tool"
+description = "Build interactive HTML reports from Python. Fork of the original Datapane project."
 authors = [{name = "Data In Pane Team", email = "dev@datainpane.com"}]
 license = "Apache-2.0"
 readme = "README.md"
 requires-python = ">=3.12"
-keywords = ["data", "analysis", "jupyter", "pandas", "altair"]
+keywords = ["data", "analysis", "jupyter", "pandas", "altair", "report", "datapane"]
 classifiers = [
     "Topic :: Software Development",
     "Topic :: Software Development :: Libraries :: Python Modules",
@@ -46,6 +46,7 @@ cloud = []
 Homepage = "https://www.datainpane.com"
 Repository = "https://github.com/pallavbakshi/datapane"
 Documentation = "https://docs.datainpane.com"
+"Original Project" = "https://github.com/datapane/datapane"
 
 [dependency-groups]
 dev = [

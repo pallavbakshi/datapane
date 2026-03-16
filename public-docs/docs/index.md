@@ -5,7 +5,7 @@
 </p>
 
 !!! info
-    Data In Pane is a modernized fork of the original Datapane project, updated for Python 3.12+ and modern dependencies. It focuses on free, local report generation — no cloud service required.
+    Data In Pane is a modernized fork of the original [Datapane](https://github.com/datapane/datapane) project (created by the Datapane team, 2019-2023). Updated for Python 3.12+, pandas 3.x, Bokeh 3.x, and modern dependencies. Focuses on free, local report generation — no cloud service required.
 
 ## Overview
 

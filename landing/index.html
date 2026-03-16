@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data In Pane - Interactive reports from Python</title>
+<meta name="description" content="Build interactive HTML reports from pandas DataFrames and plots in seconds. No server required.">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f8fafc;--fg:#1E293B;--muted:#64748b;--accent:#FB923C;
+    --accent-hover:#f97316;--card:#fff;--border:#E2E8F0;--code-bg:#f1f5f9;
+    --text-contrast:#334155;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
+    --mono:"IBM Plex Mono","Fira Code",monospace;
+  }
+  html{font-size:16px;scroll-behavior:smooth}
+  body{font-family:var(--font);color:var(--fg);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-inner{max-width:1100px;margin:0 auto;padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+  .nav-brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--fg);font-weight:600;font-size:1.1rem}
+  .nav-brand img{height:28px;width:28px}
+  .nav-links{display:flex;gap:1.5rem;align-items:center}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .15s}
+  .nav-links a:hover{color:var(--fg)}
+  .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.25rem;border-radius:8px;font-size:.9rem;font-weight:500;text-decoration:none;transition:all .15s}
+  .btn-primary{background:var(--accent);color:var(--fg)}
+  .btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(251,146,60,.35)}
+  .btn-ghost{color:var(--fg);border:1px solid var(--border)}
+  .btn-ghost:hover{border-color:var(--muted);background:var(--card)}
+
+  /* HERO */
+  .hero{max-width:1100px;margin:0 auto;padding:5rem 1.5rem 4rem;text-align:center}
+  .hero-badge{display:inline-block;padding:.3rem .8rem;border-radius:20px;font-size:.8rem;color:var(--fg);background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.25);margin-bottom:1.5rem;font-weight:500}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.15;font-weight:700;letter-spacing:-.03em;margin-bottom:1rem}
+  .hero h1 span{background:linear-gradient(135deg,#FB923C,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero p{font-size:1.2rem;color:var(--muted);max-width:600px;margin:0 auto 2.5rem}
+  .hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+  /* INSTALL */
+  .install-bar{max-width:480px;margin:2rem auto 0;background:var(--fg);border-radius:10px;padding:.2rem .2rem .2rem 1.2rem;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.9rem;color:#cbd5e1}
+  .install-bar code{flex:1}
+  .install-bar button{background:#334155;border:none;color:#cbd5e1;padding:.55rem .9rem;border-radius:8px;cursor:pointer;font-size:.8rem;font-family:var(--font);transition:background .15s}
+  .install-bar button:hover{background:#475569}
+  .install-bar button.copied{color:#FB923C}
+
+  /* FEATURES */
+  .features{max-width:1100px;margin:0 auto;padding:4rem 1.5rem}
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+  .feature-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.75rem}
+  .feature-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.3rem}
+  .feature-icon.blue{background:rgba(251,146,60,.1);color:#FB923C}
+  .feature-icon.purple{background:rgba(30,41,59,.08);color:#1E293B}
+  .feature-icon.green{background:rgba(251,146,60,.1);color:#ea580c}
+  .feature-card h3{font-size:1.05rem;font-weight:600;margin-bottom:.4rem}
+  .feature-card h3{color:var(--fg)}
+  .feature-card p{font-size:.9rem;color:var(--text-contrast);line-height:1.55}
+
+  /* CODE DEMO */
+  .demo{max-width:1100px;margin:0 auto;padding:4rem 1.5rem}
+  .demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+  .demo-text h2{font-size:1.8rem;font-weight:700;margin-bottom:.75rem;letter-spacing:-.02em}
+  .demo-text p{color:var(--text-contrast);margin-bottom:1.5rem;font-size:1.05rem}
+  .demo-code{background:var(--fg);border-radius:12px;padding:1.5rem;overflow-x:auto;font-family:var(--mono);font-size:.85rem;line-height:1.7;color:#cbd5e1}
+  .demo-code .kw{color:#FB923C}
+  .demo-code .fn{color:#7dd3fc}
+  .demo-code .str{color:#86efac}
+  .demo-code .cm{color:#64748b}
+
+  /* LIBS */
+  .libs{max-width:1100px;margin:0 auto;padding:3rem 1.5rem;text-align:center}
+  .libs p{color:var(--muted);font-size:.9rem;margin-bottom:1.5rem}
+  .libs-grid{display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem 2.5rem}
+  .libs-grid span{font-size:1rem;font-weight:500;color:var(--muted);opacity:.7}
+
+  /* CTA */
+  .cta{max-width:700px;margin:0 auto;padding:5rem 1.5rem;text-align:center}
+  .cta h2{font-size:2rem;font-weight:700;margin-bottom:.75rem;letter-spacing:-.02em}
+  .cta p{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;color:var(--muted);font-size:.85rem}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--fg)}
+
+  @media(max-width:768px){
+    .demo-grid{grid-template-columns:1fr;gap:2rem}
+    .nav-links .hide-mobile{display:none}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      <img src="icon.svg" alt="">
+      Data In Pane
+    </a>
+    <div class="nav-links">
+      <a href="https://docs.datainpane.com" class="hide-mobile">Docs</a>
+      <a href="https://github.com/pallavbakshi/datapane" class="hide-mobile">GitHub</a>
+      <a href="https://docs.datainpane.com" class="btn btn-primary">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">Open Source &middot; Python 3.12+</div>
+  <h1>Interactive reports<br>from <span>Python</span></h1>
+  <p>Turn pandas DataFrames and plots into self-contained, interactive HTML reports. No server, no accounts, no fuss.</p>
+  <div class="hero-actions">
+    <a href="https://docs.datainpane.com" class="btn btn-primary">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+      Read the Docs
+    </a>
+    <a href="https://github.com/pallavbakshi/datapane" class="btn btn-ghost">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.83-.26.83-.57L9 20.93c-3.38.74-4.1-1.63-4.1-1.63-.54-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.7-.31-5.53-1.35-5.53-6a4.68 4.68 0 011.25-3.25 4.35 4.35 0 01.12-3.21s1.02-.33 3.34 1.24a11.52 11.52 0 016.07 0c2.31-1.57 3.33-1.24 3.33-1.24a4.35 4.35 0 01.12 3.21 4.66 4.66 0 011.25 3.25c0 4.66-2.84 5.69-5.54 5.99.43.37.82 1.1.82 2.23l-.01 3.3c0 .32.22.7.84.57A12 12 0 0012 .3"/></svg>
+      GitHub
+    </a>
+  </div>
+  <div class="install-bar">
+    <code>pip install datainpane</code>
+    <button onclick="navigator.clipboard.writeText('pip install datainpane');this.textContent='Copied!';this.classList.add('copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('copied')},2000)">Copy</button>
+  </div>
+</section>
+
+<section class="features">
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon blue">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </div>
+      <h3>Rich Block Types</h3>
+      <p>DataFrames, plots, markdown, code, formulas, images, HTML embeds, and big numbers &mdash; all as composable blocks.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon purple">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 8a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zm10 0a1 1 0 011-1h4a1 1 0 011 1v6a1 1 0 01-1 1h-4a1 1 0 01-1-1v-6z"/></svg>
+      </div>
+      <h3>Flexible Layouts</h3>
+      <p>Pages, tabs, groups, selects, and toggles. Build multi-page dashboards with columns and nested layouts.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon green">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      </div>
+      <h3>Self-Contained HTML</h3>
+      <p>Reports are single .html files with everything inlined. Share via email, Slack, or embed anywhere. No server needed.</p>
+    </div>
+  </div>
+</section>
+
+<section class="demo">
+  <div class="demo-grid">
+    <div class="demo-text">
+      <h2>Five lines to a report</h2>
+      <p>Import your data, wrap it in blocks, save. That's it. Works in scripts, notebooks, and pipelines.</p>
+      <a href="https://docs.datainpane.com/quickstart/" class="btn btn-primary">Quickstart Guide</a>
+    </div>
+    <div class="demo-code">
+      <span class="kw">import</span> datainpane <span class="kw">as</span> dip<br>
+      <span class="kw">import</span> pandas <span class="kw">as</span> pd<br>
+      <span class="kw">import</span> altair <span class="kw">as</span> alt<br>
+      <br>
+      df = pd.<span class="fn">read_csv</span>(<span class="str">"sales.csv"</span>)<br>
+      chart = alt.<span class="fn">Chart</span>(df).<span class="fn">mark_bar</span>().<span class="fn">encode</span>(<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;x=<span class="str">"region"</span>, y=<span class="str">"revenue"</span><br>
+      )<br>
+      <br>
+      view = dip.<span class="fn">Blocks</span>(<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;dip.<span class="fn">Text</span>(<span class="str">"# Q4 Sales Report"</span>),<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;dip.<span class="fn">Group</span>(<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dip.<span class="fn">BigNumber</span>(heading=<span class="str">"Revenue"</span>, value=<span class="str">"$1.2M"</span>),<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dip.<span class="fn">BigNumber</span>(heading=<span class="str">"Growth"</span>, value=<span class="str">"18%"</span>),<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;columns=2,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;dip.<span class="fn">Plot</span>(chart),<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;dip.<span class="fn">DataTable</span>(df),<br>
+      )<br>
+      <br>
+      dip.<span class="fn">save_report</span>(view, path=<span class="str">"report.html"</span>)
+    </div>
+  </div>
+</section>
+
+<section class="libs">
+  <p>Works with the plotting libraries you already use</p>
+  <div class="libs-grid">
+    <span>Altair</span>
+    <span>Plotly</span>
+    <span>Matplotlib</span>
+    <span>Bokeh</span>
+    <span>Folium</span>
+    <span>pandas</span>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Start building reports</h2>
+  <p>Read the docs, install the package, and have your first report in under a minute.</p>
+  <a href="https://docs.datainpane.com" class="btn btn-primary" style="font-size:1rem;padding:.7rem 2rem">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+    Read the Docs
+  </a>
+</section>
+
+<footer>
+  <p>&copy; 2026 Data In Pane &middot; <a href="https://github.com/pallavbakshi/datapane">GitHub</a> &middot; <a href="https://docs.datainpane.com">Docs</a> &middot; Apache 2.0 License</p>
+  <p style="margin-top:.5rem;font-size:.8rem;opacity:.7">Forked from <a href="https://github.com/datapane/datapane">Datapane</a>, the original open-source report builder by the Datapane team (2019&ndash;2023).</p>
+</footer>
+
+</body>
+</html>
