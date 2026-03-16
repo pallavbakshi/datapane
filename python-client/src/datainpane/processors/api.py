@@ -197,15 +197,32 @@ def save_pdf(
                     # Wait for Vue mount + chart rendering (Bokeh, Plotly, Vega)
                     page.wait_for_timeout(3000)
 
-                # Hide interactive controls that don't work in a static PDF
+                # Hide interactive controls and fit content to page width
                 page.add_style_tag(content="""
-                    /* DataTable toolbar: SQL query, export, page size */
+                    /* Force content to fit within page */
+                    body, #report, main, .max-w-screen-xl, .max-w-3xl, .max-w-full {
+                        max-width: 100% !important;
+                        overflow: hidden !important;
+                    }
+                    /* Constrain charts and embeds */
+                    [data-cy=block-vega], .vega-embed, canvas, svg,
+                    [data-cy=block-plotly], .js-plotly-plot,
+                    [data-cy=block-bokeh],
+                    revo-grid {
+                        max-width: 100% !important;
+                        overflow: hidden !important;
+                    }
+                    .vega-embed canvas, .vega-embed svg {
+                        width: 100% !important;
+                        height: auto !important;
+                    }
+                    /* DataTable toolbar: SQL query, export */
                     [data-cy=btn-run-query], [data-cy=btn-reset-data],
                     [data-cy=btn-open-query], [data-cy=dropdown-export],
                     .query-container, .cm-container,
-                    /* DataTable stats badges and pagination */
+                    /* DataTable stats badges */
                     [data-cy=block-datatable] > div:first-child,
-                    /* NavBar (logo, settings, page tabs — not useful in PDF) */
+                    /* NavBar */
                     nav,
                     /* Vega/Altair action menu */
                     .vega-actions, .vega-embed summary,
