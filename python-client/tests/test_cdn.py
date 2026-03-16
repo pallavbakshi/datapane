@@ -16,7 +16,7 @@ def test_cdn_url_default():
     try:
         cdn = exporter.get_cdn()
         assert "cdn.jsdelivr.net" in cdn
-        assert "pallavbakshi/datapane" in cdn
+        assert "pallavbakshi/datainpane" in cdn
         assert dip.__version__ in cdn
     finally:
         for k, v in saved.items():

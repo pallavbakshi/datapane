@@ -7,7 +7,7 @@ Data In Pane's Python library can be installed using `pip` or `uv` on macOS, Win
 !!! info
     Instructions for installing Python can be found at [https://wiki.python.org/moin/BeginnersGuide/Download](https://wiki.python.org/moin/BeginnersGuide/Download).
 
-    Additional install instructions can be found on the project [GitHub's page](https://github.com/pallavbakshi/datapane).
+    Additional install instructions can be found on the project [GitHub's page](https://github.com/pallavbakshi/datainpane).
 
 ## pip
 

@@ -1,5 +1,5 @@
 <p>
-  <a href="https://github.com/pallavbakshi/datapane">
+  <a href="https://github.com/pallavbakshi/datainpane">
     <img src="static/datainpane-icon.svg" width="64px" alt="Data In Pane" />
   </a>
 </p>

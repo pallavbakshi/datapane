@@ -1,9 +1,9 @@
 site_name: Data In Pane
 site_url: https://docs.datainpane.com
-repo_name: pallavbakshi/datapane
-repo_url: https://github.com/pallavbakshi/datapane/
+repo_name: pallavbakshi/datainpane
+repo_url: https://github.com/pallavbakshi/datainpane/
 edit_uri: "edit/main/public-docs/docs/"
-copyright: © 2026 <a href="https://github.com/pallavbakshi/datapane" target="_blank">Data In Pane</a>. All rights reserved.
+copyright: © 2026 <a href="https://github.com/pallavbakshi/datainpane" target="_blank">Data In Pane</a>. All rights reserved.
 
 nav:
   - Introduction: index.md
@@ -128,4 +128,4 @@ extra:
   generator: false
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/pallavbakshi/datapane
+      link: https://github.com/pallavbakshi/datainpane

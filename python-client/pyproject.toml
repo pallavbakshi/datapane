@@ -44,7 +44,7 @@ cloud = []
 
 [project.urls]
 Homepage = "https://www.datainpane.com"
-Repository = "https://github.com/pallavbakshi/datapane"
+Repository = "https://github.com/pallavbakshi/datainpane"
 Documentation = "https://docs.datainpane.com"
 "Original Project" = "https://github.com/datapane/datapane"
 
