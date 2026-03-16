@@ -1,6 +1,6 @@
 # Data In Pane
 
-Data In Pane is a fork of the original [Datapane](https://github.com/datapane/datapane) project, modernized and actively maintained for 2026 and beyond. The original project was discontinued -- we picked it up, updated all dependencies, and rebranded it.
+> **Forked from [Datapane](https://github.com/datapane/datapane)** -- the original open-source Python library for building reports, created by the Datapane team (2019-2023). When the original project was discontinued, we forked it, modernized all dependencies, and rebranded it as **Data In Pane** so the community can keep using and building on it.
 
 ## What it does
 

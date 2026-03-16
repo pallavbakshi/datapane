@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Outer rounded rectangle (border) -->
+  <rect x="16" y="16" width="224" height="224" rx="24" ry="24" fill="none" stroke="#1a1a1a" stroke-width="14"/>
+
+  <!-- Inner dividers -->
+  <line x1="128" y1="28" x2="128" y2="228" stroke="#1a1a1a" stroke-width="8"/>
+  <line x1="28" y1="128" x2="228" y2="128" stroke="#1a1a1a" stroke-width="8"/>
+
+  <!-- Top-left: Line chart -->
+  <polyline points="48,105 68,85 82,95 100,60 115,75" fill="none" stroke="#1a1a1a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Top-right: Scatter plot -->
+  <circle cx="150" cy="70" r="4.5" fill="#1a1a1a"/>
+  <circle cx="170" cy="55" r="4.5" fill="#1a1a1a"/>
+  <circle cx="162" cy="82" r="4.5" fill="#1a1a1a"/>
+  <circle cx="185" cy="65" r="4.5" fill="#1a1a1a"/>
+  <circle cx="195" cy="85" r="4.5" fill="#1a1a1a"/>
+  <circle cx="175" cy="98" r="4.5" fill="#1a1a1a"/>
+  <circle cx="205" cy="72" r="4.5" fill="#1a1a1a"/>
+  <circle cx="148" cy="95" r="4.5" fill="#1a1a1a"/>
+  <circle cx="190" cy="50" r="3.5" fill="#1a1a1a"/>
+  <circle cx="155" cy="105" r="3.5" fill="#1a1a1a"/>
+  <circle cx="200" cy="100" r="3.5" fill="#1a1a1a"/>
+  <circle cx="210" cy="55" r="3.5" fill="#1a1a1a"/>
+
+  <!-- Bottom-left: Bar chart -->
+  <rect x="40" y="198" width="14" height="17" rx="1" fill="#1a1a1a"/>
+  <rect x="60" y="185" width="14" height="30" rx="1" fill="#1a1a1a"/>
+  <rect x="80" y="170" width="14" height="45" rx="1" fill="#1a1a1a"/>
+  <rect x="100" y="155" width="14" height="60" rx="1" fill="#1a1a1a"/>
+
+  <!-- Bottom-right: Grid/data plot -->
+  <!-- Grid lines -->
+  <line x1="145" y1="165" x2="220" y2="165" stroke="#1a1a1a" stroke-width="2"/>
+  <line x1="145" y1="185" x2="220" y2="185" stroke="#1a1a1a" stroke-width="2"/>
+  <line x1="145" y1="205" x2="220" y2="205" stroke="#1a1a1a" stroke-width="2"/>
+  <line x1="165" y1="145" x2="165" y2="220" stroke="#1a1a1a" stroke-width="2"/>
+  <line x1="185" y1="145" x2="185" y2="220" stroke="#1a1a1a" stroke-width="2"/>
+  <line x1="205" y1="145" x2="205" y2="220" stroke="#1a1a1a" stroke-width="2"/>
+  <!-- Data points on grid -->
+  <circle cx="165" cy="165" r="5" fill="#1a1a1a"/>
+  <circle cx="205" cy="185" r="5" fill="#1a1a1a"/>
+  <circle cx="185" cy="205" r="5" fill="#1a1a1a"/>
+  <circle cx="165" cy="205" r="5" fill="#1a1a1a"/>
+</svg>
