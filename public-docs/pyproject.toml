@@ -3,9 +3,9 @@ name = "datainpane-docs-beta"
 version = "0.1.0"
 description = "Data In Pane Docs"
 authors = [{ name = "Data In Pane", email = "info@datainpane.com" }]
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.14"
 dependencies = [
-    "datainpane[plotting] @ file:///${PROJECT_ROOT}/../python-client",
+    "datainpane[plotting]",
 
     # mkdocs
     "mkdocs-redirects>=1.2.0,<2.0.0",
@@ -17,6 +17,12 @@ dependencies = [
     "jupyterlab>=3.4.3,<4.0.0",
     "seaborn>=0.11.2,<1.0.0",
 ]
+
+[tool.uv.sources]
+datainpane = { path = "../python-client", editable = true }
+
+[tool.hatch.build.targets.wheel]
+packages = []
 
 [build-system]
 requires = ["hatchling"]

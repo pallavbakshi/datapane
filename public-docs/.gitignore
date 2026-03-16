@@ -527,3 +527,4 @@ tmp
 /docs/**/*-preview.png
 
 docs/_report-statics
+public-docs/.wrangler/

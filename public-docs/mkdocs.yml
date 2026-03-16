@@ -1,4 +1,5 @@
 site_name: Data In Pane
+site_url: https://docs.datainpane.com
 repo_name: datainpane/datainpane
 repo_url: https://github.com/datainpane/datainpane/
 edit_uri: "edit/main/public-docs/docs/"
@@ -34,7 +35,7 @@ nav:
 
 theme:
   name: material
-  logo: static/datapane-icon-192x192.png
+  logo: static/datainpane-icon-192x192.png
   custom_dir: overrides
   features:
     - navigation.sections
@@ -60,7 +61,7 @@ theme:
   font:
     text: Inter
     code: IBM Plex Mono
-  favicon: static/datapane-icon-192x192.png
+  favicon: static/datainpane-icon-192x192.png
 
 extra_css:
   - static/extra.css
