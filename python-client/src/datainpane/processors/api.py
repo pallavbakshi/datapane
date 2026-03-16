@@ -135,16 +135,17 @@ def save_pdf(
         )
 
     import threading
+    from functools import partial
     from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-    # Generate a full self-contained HTML file (with CDN script/link tags)
+    # Build the HTML report into a temp dir, then serve it via a local HTTP
+    # server so the browser can load the CDN JS/CSS assets over the network.
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_html = Path(tmp_dir) / "report.html"
         save_report(blocks, path=str(tmp_html), name=name, formatting=formatting)
 
-        # Serve the temp dir so the browser can load CDN resources
-        handler = type("H", (SimpleHTTPRequestHandler,), {"directory": tmp_dir})
-        handler.log_message = lambda *a, **k: None  # suppress logs
+        # Serve from the temp dir
+        handler = partial(SimpleHTTPRequestHandler, directory=tmp_dir)
         server = HTTPServer(("127.0.0.1", 0), handler)
         port = server.server_address[1]
         thread = threading.Thread(target=server.serve_forever, daemon=True)
@@ -154,11 +155,17 @@ def save_pdf(
             with sync_playwright() as p:
                 browser = p.chromium.launch()
                 page = browser.new_page()
-                page.goto(f"http://127.0.0.1:{port}/report.html", wait_until="networkidle")
+
+                # Navigate via HTTP so the browser can also fetch CDN resources
+                page.goto(
+                    f"http://127.0.0.1:{port}/report.html",
+                    wait_until="networkidle",
+                    timeout=30000,
+                )
 
                 if wait_for_js:
-                    # Extra wait for chart libraries (Bokeh, Plotly, Vega)
-                    page.wait_for_timeout(2000)
+                    # Wait for Vue mount + chart rendering (Bokeh, Plotly, Vega)
+                    page.wait_for_timeout(3000)
 
                 page.pdf(
                     path=path,
