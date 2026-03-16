@@ -14,12 +14,36 @@ Data In Pane makes it simple to build interactive reports in seconds using Pytho
 Import Data In Pane's Python library into your script or notebook and build reports programmatically by wrapping components such as:
 
 - Pandas DataFrames
-- Plots from Python visualization libraries such as Bokeh, Altair, Plotly, and Folium
-- Markdown and text
-- Files, such as images, PDFs, JSON data, etc.
-- Interactive forms which run backend Python functions
+- Plots from Python visualization libraries such as Bokeh, Altair, Plotly, Matplotlib, and Folium
+- Markdown, code blocks, and LaTeX formulas
+- Files, images, and HTML embeds
 
-Data In Pane reports are interactive and can also contain pages, tabs, drop downs, and more. Once created, reports can be exported as HTML, shared as standalone files, or embedded into your own application, where your viewers can interact with your data and visualizations.
+Reports can contain pages, tabs, groups, selects, toggles, and more. Export as self-contained HTML or high-quality PDF.
+
+## Key Features
+
+- **`dip` CLI** — `dip serve report.py` gives you a live-reload dev server. Edit your script, the browser refreshes automatically. `dip build` for one-shot builds.
+- **PDF Export** — `dip.save_pdf(view, "report.pdf")` renders reports to crisp, print-ready PDFs with properly sized charts and styled tables.
+- **8 Built-in Themes** — Default, Dark, Midnight, Ocean, Forest, Coral, Monochrome, and Navy Apricot. Apply with `Formatting.from_theme(Theme.DARK)`. Custom CSS also supported.
+- **6 Plot Libraries** — Altair, Plotly, Matplotlib, Bokeh, Folium, and pandas DataFrames all work out of the box.
+
+## Quick Example
+
+```python
+import datainpane as dip
+import pandas as pd
+
+df = pd.DataFrame({"x": [1, 2, 3], "y": [10, 20, 30]})
+
+view = dip.Blocks(
+    dip.Text("## My Report"),
+    dip.DataTable(df),
+    dip.BigNumber(heading="Total", value="60"),
+)
+
+dip.save_report(view, path="report.html")
+dip.save_pdf(view, path="report.pdf")  # pip install datainpane[pdf]
+```
 
 ## Get started
 
