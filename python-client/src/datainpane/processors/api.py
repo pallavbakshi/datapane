@@ -24,7 +24,7 @@ from .processors import (
 )
 from .types import Formatting, Pipeline, ViewState
 
-__all__ = ["save_report", "build_report", "stringify_report"]
+__all__ = ["save_report", "save_pdf", "build_report", "stringify_report"]
 
 
 ################################################################################
@@ -98,6 +98,81 @@ def save_report(
         .pipe(ExportHTMLInlineAssets(path=path, open=open, name=name, formatting=formatting))
         .result
     )
+
+
+def save_pdf(
+    blocks: BlocksT,
+    path: str,
+    name: str = "Report",
+    formatting: Formatting | None = None,
+    wait_for_js: bool = True,
+    page_width: str = "210mm",
+    page_height: str = "297mm",
+) -> None:
+    """Save the report as a PDF file.
+
+    Requires the ``pdf`` extra: ``uv add datainpane[pdf]`` (or ``pip install datainpane[pdf]``)
+    and a one-time browser install: ``playwright install chromium``
+
+    Args:
+        blocks: The ``Blocks`` object or a list of Blocks
+        path: File path to store the PDF
+        name: Name of the document
+        formatting: Sets the basic styling
+        wait_for_js: Wait for JS to finish rendering (plots, tables). Default True.
+        page_width: PDF page width (default: A4, "210mm")
+        page_height: PDF page height (default: A4, "297mm")
+    """
+    import tempfile
+
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        raise DPClientError(
+            "PDF export requires the 'pdf' extra.\n"
+            "Install it with: uv add datainpane[pdf]  (or pip install datainpane[pdf])\n"
+            "Then run: playwright install chromium"
+        )
+
+    import threading
+    from http.server import HTTPServer, SimpleHTTPRequestHandler
+
+    # Generate a full self-contained HTML file (with CDN script/link tags)
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        tmp_html = Path(tmp_dir) / "report.html"
+        save_report(blocks, path=str(tmp_html), name=name, formatting=formatting)
+
+        # Serve the temp dir so the browser can load CDN resources
+        handler = type("H", (SimpleHTTPRequestHandler,), {"directory": tmp_dir})
+        handler.log_message = lambda *a, **k: None  # suppress logs
+        server = HTTPServer(("127.0.0.1", 0), handler)
+        port = server.server_address[1]
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+
+        try:
+            with sync_playwright() as p:
+                browser = p.chromium.launch()
+                page = browser.new_page()
+                page.goto(f"http://127.0.0.1:{port}/report.html", wait_until="networkidle")
+
+                if wait_for_js:
+                    # Extra wait for chart libraries (Bokeh, Plotly, Vega)
+                    page.wait_for_timeout(2000)
+
+                page.pdf(
+                    path=path,
+                    width=page_width,
+                    height=page_height,
+                    print_background=True,
+                    margin={"top": "15mm", "bottom": "15mm", "left": "10mm", "right": "10mm"},
+                )
+                browser.close()
+        finally:
+            server.shutdown()
+
+    from datainpane.client.utils import display_msg
+    display_msg(f"PDF saved to ./{path}")
 
 
 def stringify_report(

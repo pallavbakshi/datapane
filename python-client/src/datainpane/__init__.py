@@ -43,6 +43,7 @@ from .processors import (
     Theme,
     Width,
     build_report,
+    save_pdf,
     save_report,
     stringify_report,
 )
@@ -81,6 +82,7 @@ __all__ = [
     "VAlign",
     "Blocks",
     "save_report",
+    "save_pdf",
     "build_report",
     "stringify_report",
     "X",
