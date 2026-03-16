@@ -1,8 +1,8 @@
 ---
-description: Installing and setting up the Data In Pane library and API on your device
+description: Installing and setting up the Data In Pane library on your device
 ---
 
-Data In Pane's Python library and CLI can be installed using `pip` on macOS, Windows, or Linux. Data In Pane supports Python **3.12+**.
+Data In Pane's Python library can be installed using `pip` or `uv` on macOS, Windows, or Linux. Data In Pane supports Python **3.12+**.
 
 !!! info
     Instructions for installing Python can be found at [https://wiki.python.org/moin/BeginnersGuide/Download](https://wiki.python.org/moin/BeginnersGuide/Download).
@@ -25,13 +25,29 @@ If you use `pip`, you can install it with:
     !pip3 install -U datainpane
     ```
 
+## uv
+
+If you use [`uv`](https://docs.astral.sh/uv/), you can add it to your project with:
+
+```bash
+uv add datainpane
+```
+
 ## Upgrading
 
 To upgrade Data In Pane to the latest version:
 
-```bash
-pip install -U datainpane
-```
+=== "pip"
+
+    ```bash
+    pip install -U datainpane
+    ```
+
+=== "uv"
+
+    ```bash
+    uv add --upgrade datainpane
+    ```
 
 ## Windows Tips and Troubleshooting
 
