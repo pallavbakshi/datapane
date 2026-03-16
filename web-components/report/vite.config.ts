@@ -17,6 +17,8 @@ export default defineConfig(({ mode }) => ({
     resolve: {
         alias: {
             emitter: require.resolve("emitter-component"),
+            // Polyfill Node.js stream for browser (needed by xml-js -> sax)
+            stream: path.resolve(__dirname, "../shared/stream-shim.js"),
         },
     },
     css: {

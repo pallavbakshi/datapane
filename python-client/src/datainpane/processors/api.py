@@ -134,29 +134,59 @@ def save_pdf(
             "Then run: playwright install chromium"
         )
 
+    import importlib.resources
     import threading
-    from functools import partial
     from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-    # Build the HTML report into a temp dir, then serve it via a local HTTP
-    # server so the browser can load the CDN JS/CSS assets over the network.
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        tmp_html = Path(tmp_dir) / "report.html"
-        save_report(blocks, path=str(tmp_html), name=name, formatting=formatting)
+    # Locate the web-components dist directory shipped with the package.
+    # If it exists (editable install or full repo checkout), we serve assets
+    # locally so the report HTML works without depending on the CDN.
+    # parents[4] from src/datainpane/processors/api.py -> repo root
+    _dist_dir = Path(__file__).resolve().parents[4] / "web-components" / "dist"
+    if not _dist_dir.is_dir():
+        # Fallback: installed package — dist not available locally
+        _dist_dir = None
 
-        # Serve from the temp dir
-        handler = partial(SimpleHTTPRequestHandler, directory=tmp_dir)
-        server = HTTPServer(("127.0.0.1", 0), handler)
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        tmp_path = Path(tmp_dir)
+
+        if _dist_dir:
+            # Symlink the dist directory into the temp dir so the local server
+            # can serve both the report HTML and the JS/CSS assets.
+            (tmp_path / "dist").symlink_to(_dist_dir)
+            cdn_base = "/dist"
+        else:
+            cdn_base = None  # use default CDN
+
+        # Save report HTML with CDN pointing to our local server
+        import os
+        old_cdn = os.environ.get("DIP_CDN_BASE")
+        try:
+            if cdn_base:
+                os.environ["DIP_CDN_BASE"] = cdn_base
+            save_report(blocks, path=str(tmp_path / "report.html"), name=name, formatting=formatting)
+        finally:
+            if old_cdn is not None:
+                os.environ["DIP_CDN_BASE"] = old_cdn
+            elif "DIP_CDN_BASE" in os.environ:
+                del os.environ["DIP_CDN_BASE"]
+
+        # Serve the temp dir
+        class _Handler(SimpleHTTPRequestHandler):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, directory=tmp_dir, **kwargs)
+            def log_message(self, format, *args):
+                pass  # suppress request logs
+
+        server = HTTPServer(("127.0.0.1", 0), _Handler)
         port = server.server_address[1]
-        thread = threading.Thread(target=server.serve_forever, daemon=True)
-        thread.start()
+        threading.Thread(target=server.serve_forever, daemon=True).start()
 
         try:
             with sync_playwright() as p:
                 browser = p.chromium.launch()
                 page = browser.new_page()
 
-                # Navigate via HTTP so the browser can also fetch CDN resources
                 page.goto(
                     f"http://127.0.0.1:{port}/report.html",
                     wait_until="networkidle",
