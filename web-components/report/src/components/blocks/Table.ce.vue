@@ -4,7 +4,7 @@ import sanitizeHtml from "sanitize-html";
 
 const sanitizeTableOptions: sanitizeHtml.IOptions = {
     allowedTags: ['table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td',
-                  'caption', 'colgroup', 'col', 'span', 'div', 'p', 'br'],
+                  'caption', 'colgroup', 'col', 'span', 'div', 'p', 'br', 'style'],
     allowedAttributes: {
         'table': ['class', 'id', 'style'],
         'th': ['class', 'style', 'colspan', 'rowspan', 'scope'],
