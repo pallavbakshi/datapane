@@ -1,6 +1,6 @@
 [project]
 name = "datainpane"
-version = "0.17.0"
+version = "0.18.0"
 description = "Build interactive HTML reports from Python. Fork of the original Datapane project."
 authors = [{name = "Data In Pane Team", email = "dev@datainpane.com"}]
 license = "Apache-2.0"

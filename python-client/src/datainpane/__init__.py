@@ -1,6 +1,6 @@
 # Copyright 2020 StackHut Limited (trading as Data In Pane)
 # SPDX-License-Identifier: Apache-2.0
-__version__ = "0.17.0"
+__version__ = "0.18.0"
 
 
 # Public API re-exports
