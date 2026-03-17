@@ -7,6 +7,7 @@ from pathlib import Path
 import pandas as pd
 from pandas.io.formats.style import Styler
 
+from datainpane.client import DPClientError
 from datainpane.common import NPath, SSDict
 from datainpane.common.df_processor import to_df
 from datainpane.common.viewxml_utils import mk_attribs
@@ -49,7 +50,7 @@ class Media(AssetBlock):
     """
     The Media block allows you to include images, GIFs, video and audio in your apps. If the file is in a supported format, it will be displayed inline in your app.
 
-    To include an image, you can use `dp.Media` and pass the path.
+    To include an image, you can use `dp.Media` and pass the path or SVG content directly.
 
     !!! note
         Supported video, audio and image formats depend on the browser used to view the report. MP3, MP4, and all common image formats are generally supported by modern browsers
@@ -59,20 +60,32 @@ class Media(AssetBlock):
 
     def __init__(
         self,
-        file: NPath,
+        file: NPath | None = None,
         name: BlockId = None,
         label: str = None,
         caption: str | None = None,
+        data: str | bytes | None = None,
     ):
         """
         Args:
             file: Path to a file to attach to the report (e.g. a JPEG image)
+            data: Raw content (e.g. an SVG string) to embed directly
             name: A unique name for the block to reference when adding text or embedding (optional)
             caption: A caption to display below the file (optional)
             label: A label used when displaying the block (optional)
+
+        Example::
+
+            dip.Media(file="logo.png")
+            dip.Media(data='<svg xmlns="http://www.w3.org/2000/svg">...</svg>')
         """
-        file = Path(file).expanduser()
-        super().__init__(file=file, name=name, caption=caption, label=label)
+        if data is not None:
+            super().__init__(data=data, name=name, caption=caption, label=label)
+        elif file is not None:
+            file = Path(file).expanduser()
+            super().__init__(file=file, name=name, caption=caption, label=label)
+        else:
+            raise DPClientError("Either 'file' or 'data' must be provided to Media")
 
 
 class Attachment(AssetBlock):
@@ -138,6 +151,8 @@ class Plot(AssetBlock):
         scale: float = 1.0,
         name: BlockId = None,
         label: str = None,
+        show_actions: bool = True,
+        savefig_kw: dict | None = None,
     ):
         """
         Args:
@@ -147,7 +162,15 @@ class Plot(AssetBlock):
             scale: Set the scaling factor for the plt (optional, default = 1.0)
             name: A unique name for the block to reference when adding text or embedding (optional)
             label: A label used when displaying the block (optional)
+            show_actions: Show the Vega/Altair action menu (View Source, etc). Default True.
+            savefig_kw: Extra keyword arguments passed to matplotlib's ``savefig()`` (e.g. ``dpi``, ``pad_inches``). Ignored for non-matplotlib plots.
         """
+        # For Altair/Vega charts, embed the actions config in the spec
+        if not show_actions:
+            from altair.utils import SchemaBase
+            if isinstance(data, SchemaBase):
+                data = data.properties(usermeta={"embedOptions": {"actions": False}})
+        self.savefig_kw: dict = savefig_kw or {}
         super().__init__(data=data, caption=caption, responsive=responsive, scale=scale, name=name, label=label)
 
 

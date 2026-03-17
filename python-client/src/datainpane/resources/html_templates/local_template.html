@@ -4,6 +4,28 @@
     % include("head_chrome.html")
   </head>
   <body>
-      <div id="report"></div>
+    % if header:
+    <header id="dip-header" role="banner" style="padding:12px 24px;border-bottom:1px solid var(--dip-border);background:var(--dip-surface);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;align-items:center;gap:12px;color:var(--dip-text)">
+      {{ !header }}
+    </header>
+    % end
+    % if toc_html:
+    {{ !toc_html }}
+    <div style="margin-left:220px">
+    % end
+      <main role="main">
+        <div id="report"></div>
+      </main>
+    % if toc_html:
+    </div>
+    % end
+    % if footer:
+    <footer id="dip-footer" role="contentinfo" style="padding:12px 24px;border-top:1px solid var(--dip-border);background:var(--dip-surface);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;color:var(--dip-text-muted);text-align:center">
+      {{ !footer }}
+    </footer>
+    % end
+    % if dark_toggle_html:
+    {{ !dark_toggle_html }}
+    % end
   </body>
 </html>

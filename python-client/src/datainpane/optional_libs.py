@@ -67,3 +67,12 @@ try:
 except Exception:
     HAVE_PLOTLY = False
     log.debug("No Plotly Found")
+
+# Great Tables
+try:
+    from great_tables import GT
+
+    HAVE_GREAT_TABLES = True
+except Exception:
+    HAVE_GREAT_TABLES = False
+    log.debug("No great_tables found")

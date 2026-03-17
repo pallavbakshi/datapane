@@ -123,6 +123,14 @@ class Formatting:
     You can also inject arbitrary CSS via `custom_css`::
 
         Formatting(custom_css="h1 { border-bottom: 2px solid #FB923C; }")
+
+    Add header/footer branding::
+
+        Formatting(header="<img src='logo.png' height='40'/> My Company")
+
+    Enable dark mode toggle::
+
+        Formatting(dark_mode_toggle=True)
     """
 
     bg_color: str = "#FFF"
@@ -132,6 +140,9 @@ class Formatting:
     width: Width = Width.MEDIUM
     light_prose: bool = False
     custom_css: str = ""
+    header: str = ""
+    footer: str = ""
+    dark_mode_toggle: bool = False
 
     def to_css(self) -> str:
         if isinstance(self.font, FontChoice):

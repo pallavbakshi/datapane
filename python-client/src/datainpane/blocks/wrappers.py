@@ -14,6 +14,10 @@ from datainpane.client import DPClientError
 
 from .base import DataBlock
 
+# Maximum number of cells before auto-wrapping uses DataTable instead of Table.
+# Override with: dip.TABLE_CELL_LIMIT = 1000
+TABLE_CELL_LIMIT: int = 250
+
 
 @multimethod
 def convert_to_block(x: object) -> DataBlock:
@@ -42,7 +46,7 @@ def convert_to_block(x: Path) -> DataBlock:
 @multimethod
 def convert_to_block(x: pd.DataFrame) -> DataBlock:
     n_cells = x.shape[0] * x.shape[1]
-    return b.Table(x) if n_cells <= 250 else b.DataTable(x)
+    return b.Table(x) if n_cells <= TABLE_CELL_LIMIT else b.DataTable(x)
 
 
 # Plots
@@ -77,3 +81,10 @@ if opt.HAVE_MATPLOTLIB:
     @multimethod
     def convert_to_block(x: opt.Figure | opt.Axes | opt.ndarray) -> DataBlock:
         return b.Plot(x)
+
+
+if opt.HAVE_GREAT_TABLES:
+
+    @multimethod
+    def convert_to_block(x: opt.GT) -> DataBlock:
+        return b.HTML(x.as_raw_html())

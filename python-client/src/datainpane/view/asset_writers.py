@@ -95,6 +95,28 @@ class HTMLTableWriter:
             )
 
 
+class MediaWriter:
+    """Write raw media data (e.g. SVG strings) to the file store."""
+
+    @multimethod
+    def get_meta(self, x: str) -> AssetMeta:
+        if x.lstrip().startswith("<svg"):
+            return AssetMeta(ext=".svg", mime="image/svg+xml")
+        return AssetMeta(ext=".html", mime="text/html")
+
+    @multimethod
+    def get_meta(self, x: bytes) -> AssetMeta:
+        return AssetMeta(ext=".bin", mime="application/octet-stream")
+
+    @multimethod
+    def write_file(self, x: str, f) -> None:
+        f.write(x.encode("utf-8"))
+
+    @multimethod
+    def write_file(self, x: bytes, f) -> None:
+        f.write(x)
+
+
 class PlotWriter:
     # Altair (always installed)
     @multimethod
@@ -146,11 +168,27 @@ class PlotWriter:
 
         @multimethod
         def write_file(self, x: opt.Figure, f) -> None:
-            x.savefig(DPTextIOWrapper(f), format="svg", bbox_inches="tight")
+            # Prevent cropping on multi-axes / constrained figures
+            with suppress(Exception):
+                x.tight_layout()
+
+            # Build savefig kwargs: defaults + user overrides from Plot(savefig_kw=...)
+            kw: dict = dict(format="svg", bbox_inches="tight")
+            scale = getattr(x, "_dp_scale", 1.0)
+            if scale != 1.0:
+                kw["dpi"] = int(72 * scale)
+            kw.update(getattr(x, "_dp_savefig_kw", {}))
+
+            x.savefig(DPTextIOWrapper(f), **kw)
 
         @multimethod
         def write_file(self, x: opt.Axes, f) -> None:
-            self.write_file(x.get_figure(), f)
+            fig = x.get_figure()
+            # Propagate Plot options from Axes to Figure
+            for attr in ("_dp_savefig_kw", "_dp_scale"):
+                if hasattr(x, attr) and not hasattr(fig, attr):
+                    setattr(fig, attr, getattr(x, attr))
+            self.write_file(fig, f)
 
         @multimethod
         def write_file(self, x: opt.ndarray, f) -> None:

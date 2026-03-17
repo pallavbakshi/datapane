@@ -163,6 +163,16 @@ def to_df(value: Any) -> pd.DataFrame:
     if isinstance(value, (Number, str, bool, datetime.datetime, datetime.timedelta)):
         return pd.DataFrame({"Result": value}, index=[0])
 
+    # Polars support: auto-convert to pandas
+    try:
+        import polars as pl
+        if isinstance(value, (pl.DataFrame, pl.LazyFrame)):
+            if isinstance(value, pl.LazyFrame):
+                value = value.collect()
+            return value.to_pandas()
+    except ImportError:
+        pass
+
     if isinstance(value, np.ndarray):
         try:
             out_df = pd.DataFrame(value)

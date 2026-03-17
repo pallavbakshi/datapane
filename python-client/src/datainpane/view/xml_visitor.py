@@ -127,6 +127,19 @@ class XMLBuilder(ViewVisitor):
 
         if b.data is not None:
             # fe = files.add_to_store(self.data, s.store)
+            # Pass Plot-specific savefig options to matplotlib figures
+            if hasattr(b, "savefig_kw"):
+                try:
+                    from matplotlib.figure import Figure as MplFigure
+                    from matplotlib.axes import Axes as MplAxes
+                    target = b.data
+                    if isinstance(target, MplAxes):
+                        target = target.get_figure()
+                    if isinstance(target, MplFigure):
+                        target._dp_savefig_kw = getattr(b, "savefig_kw", {})
+                        target._dp_scale = float(b._attributes.get("scale", 1.0))
+                except ImportError:
+                    pass
             try:
                 writer = get_writer(b)
                 meta: AssetMeta = writer.get_meta(b.data)
@@ -175,6 +188,7 @@ def get_writer(b: AssetBlock) -> AssetWriterP:
                 a.Table: aw.HTMLTableWriter,
                 a.DataTable: aw.DataTableWriter,
                 a.Attachment: aw.AttachmentWriter,
+                a.Media: aw.MediaWriter,
             }
         )
     return asset_mapping[type(b)]()

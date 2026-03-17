@@ -16,9 +16,12 @@ from .client import (  # isort:skip  otherwise circular import issue
 
 from .blocks import (
     HTML,
+    AreaChart,
     Attachment,
+    BarChart,
     BigNumber,
     Block,
+    Callout,
     Code,
     DataTable,
     Diff,
@@ -26,9 +29,12 @@ from .blocks import (
     Empty,
     Formula,
     Group,
+    LineChart,
     Media,
     Page,
     Plot,
+    Progress,
+    ScatterChart,
     Select,
     SelectType,
     Table,
@@ -46,6 +52,7 @@ from .processors import (
     build_report,
     save_pdf,
     save_report,
+    save_report_pages,
     stringify_report,
 )
 from .view import App, Blocks, Report, View
@@ -53,6 +60,7 @@ from .view import App, Blocks, Report, View
 # Other useful re-exports
 # ruff: noqa: I001
 from . import builtins  # isort:skip  otherwise circular import issue
+from . import templates  # isort:skip
 
 X = wrap_block
 
@@ -67,9 +75,15 @@ __all__ = [
     "Attachment",
     "BigNumber",
     "Empty",
+    "AreaChart",
+    "BarChart",
+    "Callout",
     "DataTable",
     "Diff",
+    "LineChart",
     "Media",
+    "Progress",
+    "ScatterChart",
     "Plot",
     "Table",
     "Select",
@@ -84,6 +98,7 @@ __all__ = [
     "VAlign",
     "Blocks",
     "save_report",
+    "save_report_pages",
     "save_pdf",
     "build_report",
     "stringify_report",

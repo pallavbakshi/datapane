@@ -24,7 +24,7 @@ from .processors import (
 )
 from .types import Formatting, Pipeline, ViewState
 
-__all__ = ["save_report", "save_pdf", "build_report", "stringify_report"]
+__all__ = ["save_report", "save_pdf", "build_report", "stringify_report", "save_report_pages"]
 
 
 ################################################################################
@@ -35,6 +35,7 @@ def build_report(
     dest: NPath | None = None,
     formatting: Formatting | None = None,
     overwrite: bool = False,
+    toc: bool = False,
 ) -> None:
     """Build an (static) app with a directory structure, which can be served by a local http server
 
@@ -47,6 +48,7 @@ def build_report(
         dest: File path to store the app directory
         formatting: Sets the basic app styling
         overwrite: Replace existing app with the same name and destination if already exists (default: False)
+        toc: Generate a table of contents from Page/Group labels (default: False)
     """
     # TODO(product) - unknown if we should keep this...
 
@@ -68,7 +70,7 @@ def build_report(
         Pipeline(s)
         .pipe(PreProcessView(is_finalised=True))
         .pipe(ConvertXML())
-        .pipe(ExportHTMLFileAssets(app_dir=app_dir, name=name, formatting=formatting))
+        .pipe(ExportHTMLFileAssets(app_dir=app_dir, name=name, formatting=formatting, toc=toc))
         .result
     )
 
@@ -79,6 +81,8 @@ def save_report(
     open: bool = False,
     name: str = "Report",
     formatting: Formatting | None = None,
+    offline: bool = False,
+    toc: bool = False,
 ) -> None:
     """Save the app document to a local HTML file
 
@@ -88,6 +92,8 @@ def save_report(
         open: Open in your browser after creating (default: False)
         name: Name of the document (optional: uses path if not provided)
         formatting: Sets the basic app styling
+        offline: Bundle all JS/CSS inline for fully offline viewing (default: False)
+        toc: Generate a table of contents from Page/Group labels (default: False)
     """
 
     s = ViewState(blocks=Blocks.wrap_blocks(blocks), file_entry_klass=B64FileEntry)
@@ -95,7 +101,7 @@ def save_report(
         Pipeline(s)
         .pipe(PreProcessView(is_finalised=True))
         .pipe(ConvertXML())
-        .pipe(ExportHTMLInlineAssets(path=path, open=open, name=name, formatting=formatting))
+        .pipe(ExportHTMLInlineAssets(path=path, open=open, name=name, formatting=formatting, offline=offline, toc=toc))
         .result
     )
 
@@ -349,3 +355,54 @@ def stringify_report(
     )
 
     return report_html
+
+
+def save_report_pages(
+    blocks: BlocksT,
+    dest: str = ".",
+    name: str = "Report",
+    formatting: Formatting | None = None,
+    offline: bool = False,
+) -> list[str]:
+    """Save each Page as a separate HTML file.
+
+    If ``blocks`` contains ``Page`` blocks, each page is saved as an individual
+    HTML file named ``{dest}/{name} - {page_title}.html``.  If there are no
+    ``Page`` blocks the entire report is saved as a single file.
+
+    Args:
+        blocks: The ``Blocks`` object or a list of Blocks
+        dest: Directory to write the HTML files into (default: current dir)
+        name: Base name for the files
+        formatting: Sets the basic app styling
+        offline: Bundle all JS/CSS inline for fully offline viewing
+
+    Returns:
+        List of file paths that were created.
+    """
+    from datainpane.blocks import Page
+
+    wrapped = Blocks.wrap_blocks(blocks)
+    pages = [b for b in wrapped.blocks if isinstance(b, Page)]
+
+    if not pages:
+        # No Page blocks — fall back to single-file export
+        path = str(Path(dest) / f"{name}.html")
+        save_report(blocks, path=path, name=name, formatting=formatting, offline=offline)
+        return [path]
+
+    paths: list[str] = []
+    dest_dir = Path(dest)
+    dest_dir.mkdir(parents=True, exist_ok=True)
+
+    for page in pages:
+        page_title = page.title or page.name or f"Page {len(paths) + 1}"
+        safe_title = "".join(c if c.isalnum() or c in " -_" else "_" for c in page_title)
+        path = str(dest_dir / f"{name} - {safe_title}.html")
+        page_blocks = Blocks(*page.blocks)
+        save_report(page_blocks, path=path, name=page_title, formatting=formatting, offline=offline)
+        paths.append(path)
+
+    from datainpane.client.utils import display_msg
+    display_msg(f"Saved {len(paths)} pages to {dest}/")
+    return paths

@@ -63,10 +63,10 @@ def _compute_diff(
 
     Returns (diff_df, styles_df) where styles_df has CSS strings for each cell.
     """
-    # Colors — use !important to override shadow DOM table styles
-    C_ADD = "background-color: #bbf7d0 !important; color: #14532d !important"      # green-200
-    C_REMOVE = "background-color: #fecaca !important; color: #7f1d1d !important"   # red-200
-    C_CHANGE = "background-color: #fde68a !important; color: #78350f !important"   # yellow-200
+    # Colors — use CSS variables for dark mode support, !important to override shadow DOM
+    C_ADD = "background-color: var(--dip-diff-add-bg) !important; color: var(--dip-diff-add-text) !important"
+    C_REMOVE = "background-color: var(--dip-diff-rm-bg) !important; color: var(--dip-diff-rm-text) !important"
+    C_CHANGE = "background-color: var(--dip-diff-chg-bg) !important; color: var(--dip-diff-chg-text) !important"
     C_NONE = ""
 
     # Align on shared index and columns
@@ -153,28 +153,28 @@ def _render_diff_html(diff_df: pd.DataFrame, styles_df: pd.DataFrame) -> str:
     import html as html_mod
 
     lines = [
-        '<table style="border-collapse:collapse;width:100%;font-size:14px;font-family:inherit">',
-        "<thead><tr>",
+        '<table role="table" style="border-collapse:collapse;width:100%;font-size:14px;font-family:inherit">',
+        '<thead role="rowgroup"><tr role="row">',
     ]
     for col in diff_df.columns:
         lines.append(
-            f'<th style="background:#f1f5f9;font-weight:600;padding:10px 14px;'
-            f'border-bottom:2px solid #e2e8f0;text-align:left">'
+            f'<th role="columnheader" style="background:var(--dip-diff-header-bg);font-weight:600;padding:10px 14px;'
+            f'border-bottom:2px solid var(--dip-border);text-align:left">'
             f'{html_mod.escape(str(col))}</th>'
         )
-    lines.append("</tr></thead><tbody>")
+    lines.append("</tr></thead><tbody role='rowgroup'>")
 
     for i in range(len(diff_df)):
-        lines.append("<tr>")
+        lines.append('<tr role="row">')
         for col in diff_df.columns:
             val = diff_df.iloc[i][col]
             style = styles_df.iloc[i][col]
-            base_style = "padding:8px 14px;border-bottom:1px solid #e2e8f0"
+            base_style = "padding:8px 14px;border-bottom:1px solid var(--dip-border)"
             if style:
                 cell_style = f"{base_style};{style}"
             else:
                 cell_style = base_style
-            lines.append(f'<td style="{cell_style}">{html_mod.escape(str(val))}</td>')
+            lines.append(f'<td role="cell" style="{cell_style}">{html_mod.escape(str(val))}</td>')
         lines.append("</tr>")
 
     lines.append("</tbody></table>")

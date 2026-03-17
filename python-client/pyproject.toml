@@ -40,6 +40,9 @@ plotting = [
     "plotly>=5.6.0,<6.0.0",
     "folium>=0.13.0",
 ]
+tables = [
+    "great-tables>=0.12.0",
+]
 pdf = [
     "playwright>=1.40.0",
 ]
