@@ -402,7 +402,7 @@ wheels = [
 
 [[package]]
 name = "datainpane"
-version = "0.17.0"
+version = "0.18.0"
 source = { editable = "../python-client" }
 dependencies = [
     { name = "altair" },
@@ -434,6 +434,7 @@ requires-dist = [
     { name = "colorlog", specifier = ">=6.4.0,<7.0.0" },
     { name = "dominate", specifier = ">=2.7.0,<3.0.0" },
     { name = "folium", marker = "extra == 'plotting'", specifier = ">=0.13.0" },
+    { name = "great-tables", marker = "extra == 'tables'", specifier = ">=0.12.0" },
     { name = "ipynbname", specifier = ">=2021.3.2" },
     { name = "lxml", specifier = ">=4.7.1,<5.0.0" },
     { name = "matplotlib", marker = "extra == 'plotting'", specifier = ">=3.5.0,<4.0.0" },
@@ -441,10 +442,11 @@ requires-dist = [
     { name = "multimethod", specifier = ">=1.9.0,<2.0.0" },
     { name = "packaging", specifier = ">=21.0.0" },
     { name = "pandas", specifier = ">=1.4.0" },
+    { name = "playwright", marker = "extra == 'pdf'", specifier = ">=1.40.0" },
     { name = "plotly", marker = "extra == 'plotting'", specifier = ">=5.6.0,<6.0.0" },
     { name = "pyarrow", specifier = ">=9.0.0" },
 ]
-provides-extras = ["plotting", "cloud"]
+provides-extras = ["plotting", "tables", "pdf", "cloud"]
 
 [package.metadata.requires-dev]
 dev = [
